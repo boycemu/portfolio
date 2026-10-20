@@ -6,37 +6,37 @@ const works = [
   {
     title: '一点臻享-华为体验店',
     cat: '线下门店 · C 端营销 · 2023',
-    img: `${b}works/yidian.png`,
+    img: `${b}works/yidian.webp`,
     detail: `${b}yidian.html`
   },
   {
     title: '跃通体质云',
     cat: 'B 端后台 · 家长端 · 2024',
-    img: `${b}works/tizhi-cover.png`,
+    img: `${b}works/tizhi-cover.webp`,
     detail: `${b}tizhi.html`
   },
   {
     title: '鹊山精煤网站',
     cat: '企业官网 · 工业 · 2022',
-    img: `${b}works/queshan.png`,
+    img: `${b}works/queshan.webp`,
     detail: `${b}queshan.html`
   },
   {
     title: '宾南高速公路大屏',
     cat: '三维可视化 · 大屏 · 2021',
-    img: `${b}works/binnan.png`,
+    img: `${b}works/binnan.webp`,
     detail: `${b}binnan.html`
   },
   {
     title: '平面视觉设计',
     cat: '品牌 · 海报 · 物料',
-    img: `${b}works/pingmian.png`,
+    img: `${b}works/pingmian.webp`,
     detail: `${b}pingmian.html`
   },
   {
     title: 'AIGC 设计',
     cat: 'AI 工作流 · 生成视觉',
-    img: `${b}works/aigc.png`,
+    img: `${b}works/aigc.webp`,
     detail: `${b}aigc.html`
   },
 ]

@@ -3,10 +3,10 @@
  */
 const b = import.meta.env.BASE_URL
 const cats = [
-  { title: 'App 设计', en: 'APP DESIGN', img: `${b}works-cat/app.jpg`, count: '12+', href: '#works' },
-  { title: 'Web 设计', en: 'WEB DESIGN', img: `${b}works-cat/web.jpg`, count: '15+', href: '#works' },
-  { title: 'AIGC 设计', en: 'AIGC DESIGN', img: `${b}works-cat/aigc.jpg`, count: '20+', href: `${b}aigc.html` },
-  { title: '视觉设计', en: 'VISUAL', img: `${b}works-cat/visual.jpg`, count: '30+', href: `${b}pingmian.html` },
+  { title: 'App 设计', en: 'APP DESIGN', img: `${b}works-cat/app.webp`, count: '12+', href: '#works' },
+  { title: 'Web 设计', en: 'WEB DESIGN', img: `${b}works-cat/web.webp`, count: '15+', href: '#works' },
+  { title: 'AIGC 设计', en: 'AIGC DESIGN', img: `${b}works-cat/aigc.webp`, count: '20+', href: `${b}aigc.html` },
+  { title: '视觉设计', en: 'VISUAL', img: `${b}works-cat/visual.webp`, count: '30+', href: `${b}pingmian.html` },
 ]
 
 export default function Categories() {
