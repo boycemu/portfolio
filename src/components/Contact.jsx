@@ -1,7 +1,7 @@
 export default function Contact() {
   return (
     <section className="contact" id="contact">
-      <video className="contact-bg" src="/contact-bg.mp4" autoPlay muted loop playsInline />
+      <video className="contact-bg" src={import.meta.env.BASE_URL + "contact-bg.mp4"} autoPlay muted loop playsInline />
       <div className="contact-overlay" />
       <div className="container" style={{ width: '100%' }}>
         <div className="eyebrow reveal"><span className="num">04</span> CONTACT · 联系我</div>

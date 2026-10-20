@@ -6,7 +6,7 @@ import GlitchText from './GlitchText'
 export default function Hero() {
   return (
     <header className="hero" id="top">
-      <video className="hero-bg" src="/hero-bg.mp4" autoPlay muted loop playsInline />
+      <video className="hero-bg" src={import.meta.env.BASE_URL + "hero-bg.mp4"} autoPlay muted loop playsInline />
       <div className="hero-inner">
         {/* 左侧文案 */}
         <div className="hero-left">

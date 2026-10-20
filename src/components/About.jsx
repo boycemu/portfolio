@@ -8,7 +8,7 @@ export default function About() {
       <div className="container">
         <div className="about-frame reveal">
           <div className="about-wipe">
-            <img src="/about.png" alt="穆宏伟 个人简介" />
+            <img src={import.meta.env.BASE_URL + "about.png"} alt="穆宏伟 个人简介" />
           </div>
           <div className="about-sweep" />
           <span className="corner tl" /><span className="corner tr" />
