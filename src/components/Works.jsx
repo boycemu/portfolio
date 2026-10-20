@@ -59,7 +59,7 @@ export default function Works() {
           {works.map((w) => (
             <a key={w.title} href={w.detail} className="work-card reveal">
               <div className="work-visual">
-                <img src={w.img} alt={w.title} />
+                <img loading="lazy" src={w.img} alt={w.title} />
               </div>
               <div className="work-info">
                 <div>

@@ -27,7 +27,7 @@ export default function Categories() {
           {cats.map((c) => (
             <a href={c.href} className="cat-card reveal">
               <div className="cat-visual">
-                <img src={c.img} alt={c.title} />
+                <img loading="lazy" src={c.img} alt={c.title} />
               </div>
               <div className="cat-info">
                 <div>
