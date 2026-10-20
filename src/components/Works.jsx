@@ -55,7 +55,7 @@ export default function Works() {
           <div className="count">— 06 PROJECTS / 2021 — 2026</div>
         </div>
 
-        <div className="works-grid">
+        <div className="work-grid">
           {works.map((w) => (
             <a key={w.title} href={w.detail} className="work-card reveal">
               <div className="work-visual">
