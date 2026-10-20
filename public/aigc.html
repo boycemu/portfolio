@@ -24,40 +24,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 22px 48px;
-    background: linear-gradient(180deg, rgba(5,7,15,0.9), rgba(5,7,15,0.6) 70%, transparent);
-    backdrop-filter: blur(8px);
-  }
-  .logo {
-    font-family: 'TitleFont', sans-serif;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    font-size: 15px;
-    color: #fff;
-  }
-  .back {
-    font-size: 13px;
-    color: #9fb0d8;
-    text-decoration: none;
-    border: 1px solid rgba(120,160,255,0.2);
-    padding: 8px 18px;
-    border-radius: 999px;
-  }
-  .wrap {
-    padding-top: 80px;
-  }
-  .wrap img {
-    width: 100%;
-    display: block;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 18px 48px;
     background: linear-gradient(180deg, rgba(5,7,15,0.92), rgba(5,7,15,0.6) 70%, transparent);
     backdrop-filter: blur(10px);
@@ -69,18 +35,26 @@
     font-size: 15px;
     color: #fff;
   }
-  nav .nav-links {
-    display: flex;
-    gap: 32px;
-  }
+  nav .nav-links { display: flex; gap: 32px; }
   nav .nav-links a {
     color: #c9d4f0;
     text-decoration: none;
     font-size: 13px;
-    letter-spacing: 0.05em;
-    transition: color .2s;
   }
   nav .nav-links a:hover { color: #fff; }
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .wrap img {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+  }
 </style>
 </head>
 <body>
@@ -101,10 +75,10 @@
     <img src="/portfolio/works/aigc-3.png" />
     <img src="/portfolio/works/aigc-4.png" />
     <img src="/portfolio/works/aigc-5.png" />
-    <img src="/portfolio/works/aigc-6.png" />
     <img src="/portfolio/works/aigc-7.png" />
-    <img src="/portfolio/works/aigc-8.png" />
+    <img src="/portfolio/works/aigc-6.png" />
     <img src="/portfolio/works/aigc-9.png" />
+    <img src="/portfolio/works/aigc-8.png" />
   </div>
 </body>
 </html>

@@ -17,7 +17,7 @@ export default function Hero() {
             <GlitchText
               speed={1.2}
               enableShadows
-              style={{ fontSize: 'clamp(72px, 9vw, 140px)' }}
+              style={{ fontSize: 'clamp(56px, 7vw, 100px)' }}
             >
               穆宏伟
             </GlitchText>
@@ -26,7 +26,7 @@ export default function Hero() {
             <GlitchText
               speed={1.4}
               enableShadows
-              style={{ fontSize: 'clamp(38px, 4.4vw, 68px)', color: '#4d8bff' }}
+              style={{ fontSize: 'clamp(28px, 3.2vw, 50px)', color: '#4d8bff' }}
             >
               UI / Visual Designer
             </GlitchText>
@@ -47,10 +47,10 @@ export default function Hero() {
 
           {/* 数据玻璃卡 */}
           <div className="hero-stats">
-            <div className="hs-cell"><b>8<span>+</span></b><small>Years<br/>Experience</small></div>
-            <div className="hs-cell"><b>30<span>+</span></b><small>Projects<br/>Completed</small></div>
-            <div className="hs-cell"><b>15<span>年</span></b><small>Art<br/>Foundation</small></div>
-            <div className="hs-cell"><b>100<span>%</span></b><small>Focus<br/>on Detail</small></div>
+            <div className="hs-cell"><b>8<span>+</span></b><small>Years Experience</small></div>
+            <div className="hs-cell"><b>30<span>+</span></b><small>Projects Completed</small></div>
+            <div className="hs-cell"><b>15<span>年</span></b><small>Art Foundation</small></div>
+            <div className="hs-cell"><b>100<span>%</span></b><small>Focus on Detail</small></div>
           </div>
         </div>
       </div>

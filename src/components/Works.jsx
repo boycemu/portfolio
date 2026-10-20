@@ -66,7 +66,7 @@ export default function Works() {
                   <div className="work-title">{w.title}</div>
                   <div className="work-cat">{w.cat}</div>
                 </div>
-                <div className="work-arrow">↗</div>
+                <div className="arrow">↗</div>
               </div>
             </a>
           ))}
