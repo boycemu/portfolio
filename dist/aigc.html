@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AIGC 设计 — 穆宏伟</title>
+<style>
+  @font-face {
+    font-family: 'TitleFont';
+    src: url('/fonts/title.ttf') format('truetype');
+    font-weight: 700 900;
+    font-display: swap;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #05070f;
+    color: #e8edff;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 48px;
+    background: linear-gradient(180deg, rgba(5,7,15,0.9), rgba(5,7,15,0.6) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .logo {
+    font-family: 'TitleFont', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    color: #fff;
+  }
+  .back {
+    font-size: 13px;
+    color: #9fb0d8;
+    text-decoration: none;
+    border: 1px solid rgba(120,160,255,0.2);
+    padding: 8px 18px;
+    border-radius: 999px;
+  }
+  .wrap {
+    padding-top: 80px;
+  }
+  .wrap img {
+    width: 100%;
+    display: block;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: linear-gradient(180deg, rgba(5,7,15,0.92), rgba(5,7,15,0.6) 70%, transparent);
+    backdrop-filter: blur(10px);
+  }
+  nav .logo {
+    font-family: 'TitleFont', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    color: #fff;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 32px;
+  }
+  nav .nav-links a {
+    color: #c9d4f0;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color .2s;
+  }
+  nav .nav-links a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="logo">◦ BOYCE 2026</div>
+    <div class="nav-links">
+      <a href="/#hero">首页</a>
+      <a href="/yidian.html">APP设计</a>
+      <a href="/tizhi.html">web设计</a>
+      <a href="/aigc.html">AIGC设计</a>
+      <a href="/pingmian.html">视觉设计</a>
+    </div>
+  </nav>
+  <div class="wrap">
+    <img src="/works/aigc-0.png" />
+    <img src="/works/aigc-1.png" />
+    <img src="/works/aigc-2.png" />
+    <img src="/works/aigc-3.png" />
+    <img src="/works/aigc-4.png" />
+    <img src="/works/aigc-5.png" />
+    <img src="/works/aigc-6.png" />
+    <img src="/works/aigc-7.png" />
+    <img src="/works/aigc-8.png" />
+    <img src="/works/aigc-9.png" />
+  </div>
+</body>
+</html>

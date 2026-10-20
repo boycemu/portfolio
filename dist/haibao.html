@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>海报插画 — 穆宏伟</title>
+<style>
+  @font-face {
+    font-family: 'TitleFont';
+    src: url('/fonts/title.ttf') format('truetype');
+    font-weight: 700 900;
+    font-display: swap;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #05070f;
+    color: #e8edff;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 48px;
+    background: linear-gradient(180deg, rgba(5,7,15,0.9), rgba(5,7,15,0.6) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .logo {
+    font-family: 'TitleFont', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    color: #fff;
+  }
+  .back {
+    font-size: 13px;
+    color: #9fb0d8;
+    text-decoration: none;
+    border: 1px solid rgba(120,160,255,0.2);
+    padding: 8px 18px;
+    border-radius: 999px;
+  }
+  .grid {
+    padding: 110px 40px 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 280px);
+    gap: 20px;
+    justify-content: center;
+  }
+  .grid img {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+    cursor: zoom-in;
+    transition: transform .3s;
+  }
+  .grid img:hover { transform: scale(1.02); }
+
+  .h-title {
+    padding: 20px 48px 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .h-wrap {
+    position: relative;
+    padding: 0 48px 60px;
+  }
+  .h-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .h-scroll::-webkit-scrollbar { display: none; }
+  .h-scroll img {
+    height: 320px;
+    flex: 0 0 auto;
+    border-radius: 10px;
+    scroll-snap-align: start;
+    cursor: zoom-in;
+  }
+  .h-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(120,160,255,0.3);
+    background: rgba(15,22,48,0.8);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 5;
+  }
+  .h-btn.prev { left: 8px; }
+  .h-btn.next { right: 8px; }
+
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(3,5,14,0.96);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  .lb.show { display: flex; }
+  .lb img { max-width: 90vw; max-height: 90vh; }
+  .lb-close {
+    position: fixed;
+    top: 24px; right: 32px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(120,160,255,0.3);
+    background: rgba(15,22,48,0.7);
+    color: #fff; font-size: 18px;
+    cursor: pointer;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: linear-gradient(180deg, rgba(5,7,15,0.92), rgba(5,7,15,0.6) 70%, transparent);
+    backdrop-filter: blur(10px);
+  }
+  nav .logo {
+    font-family: 'TitleFont', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    color: #fff;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 32px;
+  }
+  nav .nav-links a {
+    color: #c9d4f0;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color .2s;
+  }
+  nav .nav-links a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="logo">◦ BOYCE 2026</div>
+    <div class="nav-links">
+      <a href="/#hero">首页</a>
+      <a href="/yidian.html">APP设计</a>
+      <a href="/tizhi.html">web设计</a>
+      <a href="/aigc.html">AIGC设计</a>
+      <a href="/pingmian.html">视觉设计</a>
+    </div>
+  </nav>
+
+  <div class="grid">
+    <img src="/works/haibao-1.jpg" onclick="openLb(this.src)" />
+    <img src="/works/haibao-2.jpg" onclick="openLb(this.src)" />
+    <img src="/works/haibao-3.jpg" onclick="openLb(this.src)" />
+    <img src="/works/haibao-4.jpg" onclick="openLb(this.src)" />
+    <img src="/works/haibao-8.jpg" onclick="openLb(this.src)" />
+    <img src="/works/haibao-9.jpg" onclick="openLb(this.src)" />
+  </div>
+
+  <div class="h-title">插画</div>
+  <div class="h-wrap">
+    <button class="h-btn prev" onclick="scrollH(-1)">‹</button>
+    <div class="h-scroll" id="hscroll">
+      <img src="/works/haibao-10.jpg" onclick="openLb(this.src)" />
+      <img src="/works/haibao-11.jpg" onclick="openLb(this.src)" />
+      <img src="/works/haibao-12.jpg" onclick="openLb(this.src)" />
+      <img src="/works/haibao-13.jpg" onclick="openLb(this.src)" />
+      <img src="/works/haibao-14.jpg" onclick="openLb(this.src)" />
+    </div>
+    <button class="h-btn next" onclick="scrollH(1)">›</button>
+  </div>
+
+  <div class="lb" id="lb" onclick="closeLb()">
+    <button class="lb-close">✕</button>
+    <img id="lb-img" src="" />
+  </div>
+
+<script>
+  function openLb(src) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb').classList.add('show');
+  }
+  function closeLb() {
+    document.getElementById('lb').classList.remove('show');
+  }
+  function scrollH(dir) {
+    document.getElementById('hscroll').scrollBy({ left: dir * 400, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

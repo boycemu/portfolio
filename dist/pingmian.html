@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>平面视觉设计 — 穆宏伟</title>
+<style>
+  @font-face {
+    font-family: 'TitleFont';
+    src: url('/fonts/title.ttf') format('truetype');
+    font-weight: 700 900;
+    font-display: swap;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #05070f;
+    color: #e8edff;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+  #drape {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.7;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 48px;
+    background: linear-gradient(180deg, rgba(5,7,15,0.9), rgba(5,7,15,0.6) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .logo {
+    font-family: 'TitleFont', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    color: #fff;
+  }
+  .back {
+    font-size: 13px;
+    color: #9fb0d8;
+    text-decoration: none;
+    border: 1px solid rgba(120,160,255,0.2);
+    padding: 8px 18px;
+    border-radius: 999px;
+  }
+  .section {
+    padding: 110px 48px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .section:first-of-type { padding-top: 110px; }
+  .sec {
+    position: relative;
+  }
+  .sec-title {
+    font-family: 'TitleFont', sans-serif;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .row {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+  }
+  .row::-webkit-scrollbar { display: none; }
+  .row img {
+    height: 320px;
+    flex: 0 0 auto;
+    border-radius: 10px;
+    cursor: zoom-in;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+    border: 1px solid rgba(120,160,255,0.12);
+  }
+  .row img:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59,108,255,0.6);
+    box-shadow:
+      0 0 0 1px rgba(59,108,255,0.35),
+      0 18px 50px rgba(0,0,0,0.5),
+      0 0 30px rgba(59,108,255,0.25);
+  }
+  .row .cover {
+    height: 220px;
+    cursor: pointer;
+    transition: transform .3s;
+  }
+  .vwrap {
+    position: relative;
+    height: 220px;
+    flex: 0 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+  .vwrap video {
+    height: 100%;
+    display: block;
+  }
+  .vwrap .play-ico {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5,7,15,0.45);
+    font-size: 56px;
+    color: #fff;
+  }
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(120,160,255,0.3);
+    background: rgba(15,22,48,0.85);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 5;
+  }
+  .nav-btn.prev { left: -10px; }
+  .nav-btn.next { right: -10px; }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(3,5,14,0.96);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 40px 40px;
+    overflow-y: auto;
+  }
+  .modal.show { display: flex; }
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .modal-body img {
+    max-width: 80vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+  .modal-body.brand img {
+    max-width: 90vw;
+    max-height: none;
+  }
+  .modal-close {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(120,160,255,0.3);
+    background: rgba(15,22,48,0.7);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .modal-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(120,160,255,0.3);
+    background: rgba(15,22,48,0.8);
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .modal-nav.prev { left: 32px; }
+  .modal-nav.next { right: 32px; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: linear-gradient(180deg, rgba(5,7,15,0.92), rgba(5,7,15,0.6) 70%, transparent);
+    backdrop-filter: blur(10px);
+  }
+  nav .logo {
+    font-family: 'TitleFont', sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    color: #fff;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 32px;
+  }
+  nav .nav-links a {
+    color: #c9d4f0;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color .2s;
+  }
+  nav .nav-links a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <canvas id="drape"></canvas>
+  <nav>
+    <div class="logo">◦ BOYCE 2026</div>
+    <div class="nav-links">
+      <a href="/#hero">首页</a>
+      <a href="/yidian.html">APP设计</a>
+      <a href="/tizhi.html">web设计</a>
+      <a href="/aigc.html">AIGC设计</a>
+      <a href="/pingmian.html">视觉设计</a>
+    </div>
+  </nav>
+
+  <div class="section">
+    <div class="sec">
+      <div class="sec-title">品牌设计</div>
+      <div class="row">
+        <img class="cover" src="/works/brand-cover-1.png" onclick="showBrand(1)" />
+        <img class="cover" src="/works/brand-cover-2.png" onclick="showBrand(2)" />
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec">
+      <div class="sec-title">海报插画</div>
+      <button class="nav-btn prev" onclick="scrollRow(this,-1)">‹</button>
+      <div class="row">
+        <img src="/works/haibao-1.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-2.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-3.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-4.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-8.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-9.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-10.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-11.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-12.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-13.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-14.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-15.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-16.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-17.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-18.png" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-19.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-20.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-21.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/haibao-22.png" onclick="openLb(this.src, this)" />
+      </div>
+      <button class="nav-btn next" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec">
+      <div class="sec-title">字体设计</div>
+      <button class="nav-btn prev" onclick="scrollRow(this,-1)">‹</button>
+      <div class="row">
+        <img src="/works/ziti-15.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-16.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-18.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-19.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-20.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-21.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-22.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-1.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-2.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-3.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-4.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-5.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-6.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-7.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-8.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-9.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-10.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-11.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-12.jpg" onclick="openLb(this.src, this)" />
+        <img src="/works/ziti-14.jpg" onclick="openLb(this.src, this)" />
+      </div>
+      <button class="nav-btn next" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec">
+      <div class="sec-title">三维设计</div>
+      <div class="row">
+        <div class="vwrap" onclick="openVideo('/works/3d-demo.mp4')">
+          <video src="/works/3d-demo.mp4" muted loop playsinline preload="metadata"></video>
+          <div class="play-ico">▶</div>
+        </div>
+        <div class="vwrap" onclick="openVideo('/works/3d-demo-2.mp4')">
+          <video src="/works/3d-demo-2.mp4" muted loop playsinline preload="metadata"></video>
+          <div class="play-ico">▶</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal" onclick="closeModal(event)">
+    <button class="modal-close">✕</button>
+    <button class="modal-nav prev" onclick="navLb(-1,event)">‹</button>
+    <div class="modal-body" id="modal-body"></div>
+    <button class="modal-nav next" onclick="navLb(1,event)">›</button>
+  </div>
+
+<script>
+  // SpectralDrape 点阵背景
+  (function () {
+    const canvas = document.getElementById('drape');
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = innerWidth;
+    let h = canvas.height = innerHeight;
+    addEventListener('resize', () => { w = canvas.width = innerWidth; h = canvas.height = innerHeight; });
+    let t = 0;
+    (function draw() {
+      ctx.clearRect(0, 0, w, h);
+      const gap = 26;
+      const cols = Math.ceil(w / gap) + 1;
+      const rows = Math.ceil(h / gap) + 1;
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          const x = i * gap, y = j * gap;
+          const z = Math.sin(i * 0.45 + t) * Math.cos(j * 0.36 + t * 1.1) * 34 + Math.sin((i + j) * 0.22 + t * 0.9) * 22;
+          const depth = (z + 56) / 112;
+          const size = 1.2 + depth * 2.2;
+          const alpha = 0.05 + depth * 0.22;
+          ctx.beginPath();
+          ctx.arc(x, y + z * 0.5, size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(130,175,255,${alpha})`;
+          ctx.shadowColor = '#3b6cff';
+          ctx.shadowBlur = depth * 14;
+          ctx.fill();
+        }
+      }
+      ctx.shadowBlur = 0;
+      t += 0.006;
+      requestAnimationFrame(draw);
+    })();
+  })();
+
+  let lbList = [];
+  let lbIdx = 0;
+  function showBrand(n) {
+    const body = document.getElementById('modal-body');
+    body.classList.add('brand');
+    lbList = n === 1
+      ? ['/works/pingmian-brand-1.png']
+      : ['/works/pingmian-brand-2.png'];
+    lbIdx = 0;
+    body.innerHTML = '<img src="' + lbList[0] + '" />';
+    document.getElementById('modal').classList.add('show');
+  }
+  function openLb(src, imgEl) {
+    document.getElementById('modal-body').classList.remove('brand');
+    lbList = Array.from(imgEl.parentElement.querySelectorAll('img')).map(i => i.src);
+    lbIdx = lbList.indexOf(src);
+    document.getElementById('modal-body').innerHTML = '<img src="' + src + '" />';
+    document.getElementById('modal').classList.add('show');
+  }
+  function navLb(dir, e) {
+    e.stopPropagation();
+    lbIdx = (lbIdx + dir + lbList.length) % lbList.length;
+    document.getElementById('modal-body').innerHTML = '<img src="' + lbList[lbIdx] + '" />';
+  }
+  function openVideo(src) {
+    document.getElementById('modal-body').classList.remove('brand');
+    document.getElementById('modal-body').innerHTML = '<video src="' + src + '" controls autoplay style="max-width:90vw;max-height:85vh;border-radius:10px"></video>';
+    document.getElementById('modal').classList.add('show');
+  }
+  function closeModal(e) {
+    if (e.target.classList.contains('modal') || e.target.classList.contains('modal-close')) {
+      const v = document.querySelector('#modal-body video');
+      if (v) v.pause();
+      document.getElementById('modal').classList.remove('show');
+    }
+  }
+  function scrollRow(btn, dir) {
+    pauseUntil = Date.now() + 5000;
+    btn.parentElement.querySelector('.row').scrollBy({ left: dir * 400, behavior: 'smooth' });
+  }
+
+  // 海报插画 + 字体设计自动滚动
+  let pauseUntil = 0;
+  window.addEventListener('load', () => {
+    const rows = [document.querySelectorAll('.row')[1], document.querySelectorAll('.row')[2]];
+    rows.forEach(row => {
+      let dir = 1;
+      setInterval(() => {
+        if (Date.now() < pauseUntil) return;
+        const max = row.scrollWidth - row.clientWidth;
+        if (max <= 0) return;
+        if (row.scrollLeft >= max - 2) dir = -1;
+        if (row.scrollLeft <= 0) dir = 1;
+        row.scrollBy({ left: dir * 2, behavior: 'auto' });
+      }, 30);
+    });
+  });
+</script>
+</body>
+</html>
