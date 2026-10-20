@@ -74,7 +74,7 @@ h1, h2, h3,
 
 .section {
   position: relative;
-  padding: clamp(100px, 12vh, 180px) 0;
+  padding: 40px 0;
 }
 
 /* 章节眉标 */
@@ -440,7 +440,7 @@ h1, h2, h3,
    ============================================================ */
 .about {
   position: relative;
-  padding: 120px 0;
+  padding: 70px 0;
   background:
     radial-gradient(80% 60% at 50% 0%, rgba(59, 108, 255, 0.10), transparent 60%),
     var(--bg);
@@ -701,7 +701,7 @@ h1, h2, h3,
   position: relative;
   background: var(--bg);
   border-top: 1px solid var(--line);
-  padding-top: 120px;
+  padding-top: 70px;
   overflow: hidden;
 }
 .contact-bg {
