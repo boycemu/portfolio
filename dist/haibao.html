@@ -155,6 +155,16 @@
     transition: color .2s;
   }
   nav .nav-links a:hover { color: #fff; }
+
+  .burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
+  .burger span { width: 22px; height: 2px; background: currentColor; border-radius: 2px; transition: all .3s; }
+  @media (max-width: 760px) {
+    nav { padding: 14px 18px !important; }
+    .nav-links { display: none; position: fixed; top: 56px; left: 0; right: 0; flex-direction: column; gap: 0; background: rgba(5,7,15,0.97); padding: 12px 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .burger { display: flex; }
+  }
 </style>
 </head>
 <body>
@@ -167,7 +177,7 @@
       <a href="/aigc.html">AIGC设计</a>
       <a href="/pingmian.html">视觉设计</a>
     </div>
-  </nav>
+  <button class="burger" onclick="document.querySelector('.nav-links').classList.toggle('open')"><span></span><span></span><span></span></button></nav>
 
   <div class="grid">
     <img loading="lazy" src="/works/haibao-1.webp" onclick="openLb(this.src)" />
