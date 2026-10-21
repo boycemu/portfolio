@@ -6,7 +6,6 @@ import Works from './components/Works'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
 import SpectralDrape from './components/SpectralDrape'
-import CustomCursor from './components/CustomCursor'
 import { useReveal } from './useReveal'
 
 export default function App() {
@@ -14,7 +13,6 @@ export default function App() {
   return (
     <>
       <SpectralDrape />
-      <CustomCursor />
       <Nav />
       <Hero />
       <About />
