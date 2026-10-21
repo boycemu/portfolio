@@ -186,6 +186,41 @@ h1, h2, h3,
   color: var(--bg);
   border-color: var(--text);
 }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+.nav-burger span {
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+@media (max-width: 760px) {
+  .nav-burger { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(5,7,15,0.98);
+    backdrop-filter: blur(12px);
+    padding: 12px 24px 24px;
+    border-bottom: 1px solid var(--line);
+    display: none;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .nav-links li:last-child { border-bottom: none; }
+}
 
 /* ============================================================
    HERO —— 电竞风左文右图
@@ -783,10 +818,27 @@ h1, h2, h3,
 }
 @media (max-width: 760px) {
   .nav-links { display: none; }
-  .work-grid { grid-template-columns: 1fr; }
+  .nav { padding: 14px 18px; }
+  .nav .logo { font-size: 13px; }
+  .nav-cta { font-size: 12px; padding: 7px 14px; }
+  .work-grid { grid-template-columns: 1fr; gap: 20px; }
   .work-card.featured { grid-column: span 1; }
-  .skill-grid { grid-template-columns: 1fr; }
+  .skill-grid { grid-template-columns: 1fr; gap: 16px; }
   .stats-row { grid-template-columns: 1fr; gap: 24px; }
+  .cat-grid { grid-template-columns: 1fr !important; gap: 14px; }
+  .container { padding: 0 18px; }
+  .section { padding: 40px 0; }
+  .about { padding: 40px 0; }
+  .contact { padding-top: 40px; }
+  .hero-bottom { padding: 14px 18px 20px; font-size: 10px; }
+  h1 { font-size: clamp(36px, 11vw, 64px) !important; line-height: 1.05; }
+  h2 { font-size: clamp(28px, 9vw, 44px) !important; }
+  .eyebrow { font-size: 11px; }
+  .work-info { padding: 14px 16px; }
+  .work-title { font-size: 16px; }
+  .work-cat { font-size: 12px; }
+  .work-arrow { width: 36px; height: 36px; font-size: 14px; }
+  .about-frame { border-radius: 12px; }
 }
 
 /* ============================================================
