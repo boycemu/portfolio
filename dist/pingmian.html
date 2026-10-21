@@ -238,9 +238,9 @@
     nav .nav-links.open { display: flex; }
     .nav-links a { padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .burger { display: flex; }
-    .row { flex-wrap: wrap; overflow-x: visible; }
-    .row .cover, .vwrap { flex: 0 0 100%; height: auto; }
-    .row .cover img, .vwrap video { width: 100%; height: auto; }
+    .brand-row, .video-row { flex-wrap: wrap; overflow-x: visible; }
+    .brand-row .cover, .video-row .vwrap { flex: 0 0 100%; height: auto; }
+    .brand-row .cover img, .video-row .vwrap video { width: 100%; height: auto; }
   }
 </style>
 </head>
@@ -260,7 +260,7 @@
   <div class="section">
     <div class="sec">
       <div class="sec-title">品牌设计</div>
-      <div class="row">
+      <div class="row brand-row">
         <img class="cover" src="/works/brand-cover-1.webp" onclick="showBrand(1)" />
         <img class="cover" src="/works/brand-cover-2.webp" onclick="showBrand(2)" />
       </div>
@@ -327,7 +327,7 @@
   <div class="section">
     <div class="sec">
       <div class="sec-title">三维设计</div>
-      <div class="row">
+      <div class="row video-row">
         <div class="vwrap" onclick="openVideo('/works/3d-demo.mp4')">
           <video src="/works/3d-demo.mp4" muted loop playsinline preload="metadata"></video>
           <div class="play-ico">▶</div>
