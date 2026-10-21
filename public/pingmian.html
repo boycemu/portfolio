@@ -238,10 +238,11 @@
     nav .nav-links.open { display: flex; }
     .nav-links a { padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .burger { display: flex; }
-    .section { padding: 90px 16px 16px !important; max-width: 100vw; }
+    .section { padding: 90px 16px 16px !important; max-width: 100vw !important; }
     .brand-row, .video-row { flex-wrap: wrap; overflow-x: visible; }
-    .brand-row .cover, .video-row .vwrap { flex: 0 0 100%; height: auto; aspect-ratio: 16/10; }
-    .brand-row .cover img, .video-row .vwrap video { width: 100%; height: 100%; object-fit: cover; }
+    .brand-row .cover, .video-row .vwrap { flex: 0 0 100% !important; height: auto !important; aspect-ratio: 16/10; max-width: 100%; }
+    .brand-row .cover { height: auto !important; object-fit: cover; }
+    .video-row .vwrap video { width: 100%; height: 100%; object-fit: cover; }
   }
 </style>
 </head>
