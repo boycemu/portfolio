@@ -1186,3 +1186,86 @@ h1, h2, h3,
 @media (max-width: 760px) {
   .back-to-top { right: 14px; width: 42px; height: 42px; font-size: 18px; bottom: 15%; }
 }
+
+/* ============================================================
+   SIDE ACTIONS —— 右侧浮动按钮组（二维码 + 置顶）
+   ============================================================ */
+.side-actions {
+  position: fixed;
+  right: 24px;
+  bottom: 18%;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.side-actions.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.side-btn {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(120,160,255,0.35);
+  background: rgba(15,22,48,0.8);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  display: grid;
+  place-items: center;
+}
+.side-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(59,108,255,0.5);
+}
+.side-btn-top { font-size: 20px; line-height: 1; }
+
+/* 二维码浮层 */
+.qr-pop {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  width: 150px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.qr-pop img {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
+.qr-pop span {
+  font-size: 11px;
+  color: #333;
+  font-family: "PingFang SC", sans-serif;
+}
+.side-btn-qr:hover .qr-pop {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+@media (max-width: 760px) {
+  .side-actions { right: 14px; bottom: 15%; gap: 10px; }
+  .side-btn { width: 42px; height: 42px; }
+  .side-btn-top { font-size: 18px; }
+}
