@@ -5,6 +5,7 @@ import Works from './components/Works'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
 import SpectralDrape from './components/SpectralDrape'
+import BackToTop from './components/BackToTop'
 import { useReveal } from './useReveal'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
       <Works />
       <Skills />
       <Contact />
+      <BackToTop />
     </>
   )
 }
