@@ -448,5 +448,44 @@
     });
   });
 </script>
+
+  <div class="side-actions">
+    <button class="side-btn side-btn-qr" aria-label="微信二维码">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" />
+        <rect x="14" y="3" width="7" height="7" rx="1.5" />
+        <rect x="3" y="14" width="7" height="7" rx="1.5" />
+        <path d="M14 14h3v3h-3z" />
+        <path d="M18.5 18.5h2.5v2.5h-2.5z" />
+      </svg>
+      <div class="qr-pop">
+        <img src="/images/wechat-qr.jpg" alt="微信二维码" />
+        <span>扫码加我微信</span>
+      </div>
+    </button>
+    <button class="side-btn side-btn-top" aria-label="回到顶部">↑</button>
+  </div>
+  <style>
+    .side-actions{position:fixed;right:24px;bottom:18%;z-index:999;display:flex;flex-direction:column;gap:12px;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s}
+    .side-actions.show{opacity:1;transform:none;pointer-events:auto}
+    .side-btn{position:relative;width:46px;height:46px;border-radius:50%;border:1px solid rgba(120,160,255,.35);background:rgba(15,22,48,.8);color:#fff;cursor:pointer;display:grid;place-items:center;transition:background .3s,border-color .3s,box-shadow .3s}
+    .side-btn:hover{background:#3b6cff;border-color:#3b6cff;box-shadow:0 0 20px rgba(59,108,255,.5)}
+    .side-btn-top{font-size:20px;line-height:1}
+    .qr-pop{position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(8px);width:150px;background:#fff;border-radius:10px;padding:10px;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:opacity .25s,transform .25s;display:flex;flex-direction:column;align-items:center;gap:6px}
+    .qr-pop img{width:128px;height:128px;object-fit:contain;border-radius:6px;display:block}
+    .qr-pop span{font-size:11px;color:#333}
+    .side-btn-qr:hover .qr-pop{opacity:1;visibility:visible;transform:translateY(-50%)}
+    @media(max-width:760px){.side-actions{right:14px;bottom:15%;gap:10px}.side-btn{width:42px;height:42px}.side-btn-top{font-size:18px}}
+  </style>
+  <script>
+    (function(){
+      var el=document.querySelector('.side-actions');
+      var topBtn=el.querySelector('.side-btn-top');
+      topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+      function onS(){el.classList.toggle('show',window.scrollY>window.innerHeight*0.9)}
+      window.addEventListener('scroll',onS);onS();
+    })();
+  </script>
+
 </body>
 </html>
