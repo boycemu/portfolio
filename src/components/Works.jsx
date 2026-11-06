@@ -5,25 +5,25 @@ const b = import.meta.env.BASE_URL
 const works = [
   {
     title: '一点臻享-华为体验店',
-    cat: '线下门店 · C 端营销 · 2023',
+    cat: '线下门店 · C 端营销',
     img: `${b}works/yidian.webp`,
     detail: `${b}yidian.html`
   },
   {
     title: '跃通体质云',
-    cat: 'B 端后台 · 家长端 · 2024',
+    cat: 'B 端后台 · 家长端',
     img: `${b}works/tizhi-cover.webp`,
     detail: `${b}tizhi.html`
   },
   {
     title: '鹊山精煤网站',
-    cat: '企业官网 · 工业 · 2022',
+    cat: '企业官网 · 工业',
     img: `${b}works/queshan.webp`,
     detail: `${b}queshan.html`
   },
   {
     title: '宾南高速公路大屏',
-    cat: '三维可视化 · 大屏 · 2021',
+    cat: '三维可视化 · 大屏',
     img: `${b}works/binnan.webp`,
     detail: `${b}binnan.html`
   },
