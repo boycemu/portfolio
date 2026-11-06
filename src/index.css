@@ -697,11 +697,11 @@ p { text-wrap: pretty; }
 }
 
 /* ============================================================
-   SKILLS —— 非对称网格：首卡跨两列，末卡通栏
+   SKILLS —— 一排六列的能力清单
    ============================================================ */
 .skill-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1px;
   background: var(--line);
   border-radius: var(--r-xl);
@@ -709,45 +709,44 @@ p { text-wrap: pretty; }
 }
 .skill-card {
   background: var(--bg);
-  padding: var(--s-6);
+  padding: var(--s-5);
+  display: flex;
+  flex-direction: column;
   transition: background var(--dur-color) var(--ease);
 }
 .skill-card:hover { background: var(--bg-soft); }
-.skill-card:nth-child(1) { grid-column: span 2; padding: var(--s-8); }
-.skill-card:nth-child(6) { grid-column: span 3; }
 
 .skill-card .num {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--accent);
-  letter-spacing: 0.2em;
-  margin-bottom: var(--s-6);
+  letter-spacing: 0.16em;
+  margin-bottom: var(--s-5);
 }
 .skill-card h3 {
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
-  margin-bottom: var(--s-3);
-  line-height: 1.3;
+  margin-bottom: var(--s-2);
+  line-height: 1.4;
 }
-.skill-card:nth-child(1) h3 { font-size: 30px; }
 .skill-card p {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-dim);
   line-height: 1.7;
-  margin-bottom: var(--s-6);
-  max-width: 46ch;
+  margin-bottom: var(--s-5);
 }
 .skill-card .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s-3);
+  gap: var(--s-2);
+  margin-top: auto;
 }
 .skill-card .tags span {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-dim);
   background: var(--bg-soft);
-  padding: var(--s-1) var(--s-3);
+  padding: 2px 8px;
   border-radius: var(--r-sm);
 }
 
@@ -921,9 +920,7 @@ p { text-wrap: pretty; }
    响应式
    ============================================================ */
 @media (max-width: 1100px) {
-  .skill-grid { grid-template-columns: repeat(2, 1fr); }
-  .skill-card:nth-child(1) { grid-column: span 2; }
-  .skill-card:nth-child(6) { grid-column: span 2; }
+  .skill-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .contact-methods { grid-template-columns: repeat(2, 1fr); }
   .method-cell:nth-child(2) { border-right: 0; }
 }
@@ -993,10 +990,10 @@ p { text-wrap: pretty; }
   .work-cat { font-size: 12px; }
   .work-arrow { width: 36px; height: 36px; }
 
-  .skill-grid { grid-template-columns: 1fr; }
-  .skill-card:nth-child(1),
-  .skill-card:nth-child(6) { grid-column: span 1; padding: var(--s-6); }
-  .skill-card:nth-child(1) h3 { font-size: 24px; }
+  .skill-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .skill-card { padding: var(--s-4); }
+  .skill-card .num { margin-bottom: var(--s-4); }
+  .skill-card p { margin-bottom: var(--s-4); }
 
   .contact-methods { grid-template-columns: 1fr; }
   .method-cell { border-right: 0; border-bottom: 1px solid var(--line); }
