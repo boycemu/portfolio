@@ -3,7 +3,7 @@ export default function Contact() {
     <section className="contact" id="contact">
       <video className="contact-bg" src={import.meta.env.BASE_URL + "contact-bg.mp4"} autoPlay muted loop playsInline />
       <div className="contact-overlay" />
-      <div className="container" style={{ width: '100%' }}>
+      <div className="container">
         <div className="eyebrow reveal"><span className="num">04</span> CONTACT · 联系我</div>
         <h2 className="reveal contact-title">
           有项目？<br />
@@ -30,8 +30,11 @@ export default function Contact() {
         </div>
 
         <div className="footer-bar">
-          <span>© 2026 MU HONGWEI. ALL RIGHTS RESERVED.</span>
-          <span>DESIGNED & BUILT BY MU HONGWEI</span>
+          <span>© 2026 MU HONGWEI</span>
+          <span>
+            <a href="privacy.html">隐私说明</a>
+            &nbsp;·&nbsp; DESIGNED &amp; BUILT BY MU HONGWEI
+          </span>
         </div>
       </div>
     </section>

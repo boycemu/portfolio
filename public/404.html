@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>页面不存在 · 穆宏伟</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        background: #0A0E18;
+        color: #E8ECF4;
+        font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        padding: 24px;
+      }
+      .wrap { max-width: 520px; }
+      .code {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 12px;
+        letter-spacing: 0.22em;
+        color: #5A73D8;
+        margin-bottom: 24px;
+      }
+      h1 {
+        font-size: clamp(32px, 7vw, 48px);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+      }
+      p { color: #8E99AE; font-size: 16px; line-height: 1.75; margin-bottom: 32px; }
+      .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+      a {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 20px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 300ms cubic-bezier(0.22,1,0.36,1), color 300ms;
+      }
+      a.primary { background: #5A73D8; color: #fff; }
+      a.primary:hover { background: #6B83E2; }
+      a.ghost { border: 1px solid rgba(150,168,205,0.28); color: #E8ECF4; }
+      a.ghost:hover { background: #141B2B; }
+      a:focus-visible { outline: 2px solid #5A73D8; outline-offset: 3px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="code">ERROR 404</div>
+      <h1>这个页面不在了</h1>
+      <p>链接可能已过期，或者地址拼错了。可以回到首页看作品，也可以直接跳到精选项目。</p>
+      <div class="actions">
+        <a class="primary" href="/">回到首页</a>
+        <a class="ghost" href="/#works">看作品精选</a>
+      </div>
+    </div>
+  </body>
+</html>

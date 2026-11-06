@@ -41,14 +41,22 @@ const works = [
   },
 ]
 
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 17L17 7M17 7H9M17 7V15" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export default function Works() {
   return (
     <section className="section" id="works">
       <div className="container">
         <div className="works-head reveal">
           <div>
-            <div className="eyebrow" style={{ marginBottom: 24 }}>
-              <span className="num">03</span> SELECTED WORKS · 精选项目
+            <div className="eyebrow">
+              <span className="num">02</span> SELECTED WORKS · 精选项目
             </div>
             <h2>作品<br />精选</h2>
           </div>
@@ -59,14 +67,14 @@ export default function Works() {
           {works.map((w) => (
             <a key={w.title} href={w.detail} className="work-card reveal">
               <div className="work-visual">
-                <img loading="lazy" src={w.img} alt={w.title} />
+                <img loading="lazy" src={w.img} alt={`${w.title} 项目封面`} />
               </div>
               <div className="work-info">
                 <div>
                   <div className="work-title">{w.title}</div>
                   <div className="work-cat">{w.cat}</div>
                 </div>
-                <div className="arrow">↗</div>
+                <div className="work-arrow"><ArrowIcon /></div>
               </div>
             </a>
           ))}

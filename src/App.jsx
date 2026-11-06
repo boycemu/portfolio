@@ -12,13 +12,16 @@ export default function App() {
   useReveal()
   return (
     <>
+      <a href="#works" className="skip-link">跳到作品内容</a>
       <SpectralDrape />
       <Nav />
       <Hero />
-      <About />
-      <Works />
-      <Skills />
-      <Contact />
+      <main>
+        <About />
+        <Works />
+        <Skills />
+        <Contact />
+      </main>
       <BackToTop />
     </>
   )

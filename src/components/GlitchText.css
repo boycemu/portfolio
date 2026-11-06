@@ -1,8 +1,8 @@
 .glitch {
-  color: #fff;
+  color: var(--text, #fff);
   font-family: var(--font-title, 'PingFang SC', sans-serif);
   white-space: nowrap;
-  font-weight: 900;
+  font-weight: 700;
   position: relative;
   user-select: none;
 }

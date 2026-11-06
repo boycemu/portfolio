@@ -14,43 +14,35 @@ export default function Hero() {
             <span className="dot" /> HELLO, I'M
           </div>
           <div className="hero-name-wrap">
-            <GlitchText
-              speed={1.2}
-              enableShadows
-              style={{ fontSize: 'clamp(56px, 7vw, 100px)' }}
-            >
+            <GlitchText className="hero-name" speed={1.2} enableShadows>
               穆宏伟
             </GlitchText>
           </div>
           <div className="hero-role-wrap">
-            <GlitchText
-              speed={1.4}
-              enableShadows
-              style={{ fontSize: 'clamp(28px, 3.2vw, 50px)', color: '#4d8bff' }}
-            >
+            <GlitchText className="hero-role" speed={1.4} enableShadows>
               UI / Visual Designer
             </GlitchText>
           </div>
           <p className="hero-desc">
-            8 年+ B 端后台、C 端产品与数据大屏设计经验，
-            用 15 年美术功底做克制而精准的界面，把想法变成有质感的数字产品。
+            8 年 B 端后台、C 端产品与数据大屏设计，
+            15 年美术功底落在间距、层级和交互节奏上。
           </p>
           <div className="hero-btns">
             <a href="#works" className="btn-primary">查看作品 →</a>
             <a href="#about" className="btn-play">
               <span className="circle">▶</span>
               <span className="play-label">
-                了解我<small>SCROLL</small>
+                看工作经历<small>SCROLL</small>
               </span>
             </a>
           </div>
 
-          {/* 数据玻璃卡 */}
+          {/* 数据卡 */}
           <div className="hero-stats">
             <div className="hs-cell"><b>8<span>+</span></b><small>Years Experience</small></div>
             <div className="hs-cell"><b>30<span>+</span></b><small>Projects Completed</small></div>
             <div className="hs-cell"><b>15<span>年</span></b><small>Art Foundation</small></div>
-            <div className="hs-cell"><b>100<span>%</span></b><small>Focus on Detail</small></div>
+            <div className="hs-cell"><b>6<span>类</span></b><small>Design Deliverables</small></div>
           </div>
         </div>
       </div>
@@ -60,6 +52,9 @@ export default function Hero() {
         <span className="scroll-tip"><i className="dot" /> SCROLL TO EXPLORE</span>
         <span className="brand-tag">DESIGN / CREATE / INSPIRE</span>
       </div>
+
+      {/* 导航滚动侦测锚点 */}
+      <div className="nav-sentinel" aria-hidden="true" />
     </header>
   )
 }

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * SpectralDrape —— 光谱帷幕背景（React Bits Spectral Drape 等效）
- * 一层 3D 起伏的发光点阵，缓慢折叠波动，作为整页底层背景
+ * SpectralDrape —— 背景点阵帷幕
+ * 一层缓慢起伏的细点阵，作为整页最底层的纹理
  */
 export default function SpectralDrape() {
   const ref = useRef(null)
@@ -10,22 +10,19 @@ export default function SpectralDrape() {
   useEffect(() => {
     const canvas = ref.current
     const ctx = canvas.getContext('2d')
-    let w = (canvas.width = window.innerWidth)
-    let h = (canvas.height = window.innerHeight)
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    const gap = 26
 
-    const onResize = () => {
-      w = canvas.width = window.innerWidth
-      h = canvas.height = window.innerHeight
-    }
-    window.addEventListener('resize', onResize)
-
+    let w = window.innerWidth
+    let h = window.innerHeight
     let t = 0
-    let raf
+    let raf = 0
+    let last = 0
 
-    const draw = () => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const render = () => {
       ctx.clearRect(0, 0, w, h)
-
-      const gap = 26
       const cols = Math.ceil(w / gap) + 1
       const rows = Math.ceil(h / gap) + 1
 
@@ -43,37 +40,42 @@ export default function SpectralDrape() {
 
           ctx.beginPath()
           ctx.arc(x, y + z * 0.5, size, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(130, 175, 255, ${alpha})`
-          ctx.shadowColor = '#3b6cff'
-          ctx.shadowBlur = depth * 14
+          // 中性灰蓝点阵，不发光
+          ctx.fillStyle = `rgba(142, 153, 174, ${alpha * 0.6})`
           ctx.fill()
         }
       }
-      ctx.shadowBlur = 0
-
-      t += 0.006
-      raf = requestAnimationFrame(draw)
     }
-    draw()
+
+    const resize = () => {
+      w = window.innerWidth
+      h = window.innerHeight
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width = w + 'px'
+      canvas.style.height = h + 'px'
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      render()
+    }
+
+    // 30fps 上限：点阵是慢速背景，不需要每帧重绘
+    const loop = (now) => {
+      raf = requestAnimationFrame(loop)
+      if (now - last < 33) return
+      last = now
+      t += 0.012
+      render()
+    }
+
+    resize()
+    window.addEventListener('resize', resize)
+    if (!reduce) raf = requestAnimationFrame(loop)
 
     return () => {
       cancelAnimationFrame(raf)
-      window.removeEventListener('resize', onResize)
+      window.removeEventListener('resize', resize)
     }
   }, [])
 
-  return (
-    <canvas
-      ref={ref}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-        zIndex: 0,
-        opacity: 0.7,
-      }}
-    />
-  )
+  return <canvas className="drape" ref={ref} aria-hidden="true" />
 }

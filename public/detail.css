@@ -1,0 +1,172 @@
+/* 二级页公共层：与首页同一套 token。加载在页面内联样式之后，同特异性下以本文件为准。 */
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-600.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  --bg: #0A0E18;
+  --bg-soft: #101725;
+  --bg-card: #141B2B;
+  --bg-elev: #1A2335;
+  --line: rgba(138, 154, 190, 0.14);
+  --line-strong: rgba(150, 168, 205, 0.28);
+  --text: #E8ECF4;
+  --text-dim: #8E99AE;
+  --text-faint: #5C6780;
+  --accent: #5A73D8;
+  --accent-hover: #6B83E2;
+  --font-sans: "Manrope", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-title: "TitleFont", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-color: 300ms;
+  --dur-move: 500ms;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- 导航：与首页一致的浮起胶囊 ---------- */
+nav {
+  top: 12px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: min(calc(100% - 32px), 1280px);
+  height: 64px;
+  padding: 0 24px !important;
+  border-radius: 16px;
+  border: 1px solid var(--line-strong);
+  background: rgba(10, 14, 24, 0.78) !important;
+  background-image: none !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-sizing: border-box;
+  z-index: 100;
+}
+nav .logo {
+  color: var(--text);
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+nav .nav-links a {
+  color: var(--text-dim);
+  font-size: 13px;
+  transition: color var(--dur-color) var(--ease);
+}
+nav .nav-links a:hover,
+nav .nav-links a.active {
+  color: var(--text);
+}
+
+/* 内容首屏给浮起导航留出位置 */
+.wrap,
+.section:first-of-type,
+.gallery:first-of-type {
+  padding-top: 96px;
+}
+
+/* ---------- 侧边悬浮按钮 ---------- */
+.side-btn {
+  border-color: var(--line-strong) !important;
+  background: rgba(20, 27, 43, 0.85) !important;
+  transition: background var(--dur-color) var(--ease),
+              border-color var(--dur-color) var(--ease),
+              transform var(--dur-move) var(--ease);
+}
+.side-btn:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  box-shadow: none !important;
+}
+.side-btn:active,
+.burger:active {
+  transform: scale(0.98);
+}
+.qr-pop {
+  border-radius: 12px !important;
+}
+.qr-pop img {
+  border-radius: 4px !important;
+}
+
+/* ---------- 状态 ---------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* 平滑锚跳 */
+html { scroll-behavior: smooth; }
+
+@media (max-width: 760px) {
+  nav {
+    top: 8px;
+    width: calc(100% - 24px);
+    height: 56px;
+    padding: 0 16px !important;
+  }
+  nav .nav-links {
+    position: fixed !important;
+    top: 72px !important;
+    left: 12px !important;
+    right: 12px !important;
+    background: var(--bg-soft) !important;
+    border-radius: 16px;
+    border-bottom: 0 !important;
+    padding: 8px 20px 20px !important;
+    box-shadow: 0 24px 60px rgba(6, 10, 22, 0.55);
+  }
+  nav .nav-links a {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0 !important;
+  }
+  nav .nav-links a:last-child {
+    border-bottom: 0;
+  }
+  .wrap,
+  .section:first-of-type,
+  .gallery:first-of-type {
+    padding-top: 84px;
+  }
+}
+
+/* 尊重系统的减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
