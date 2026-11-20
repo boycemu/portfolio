@@ -31,7 +31,7 @@ const works = [
     title: '平面视觉设计',
     cat: '品牌 · 海报 · 物料',
     img: `${b}works/pingmian.webp`,
-    detail: `${b}pingmian.html`
+    detail: `${b}mhw.html`
   },
   {
     title: 'AIGC 设计',
