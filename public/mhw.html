@@ -526,6 +526,7 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
 .mnav-resume{position:absolute;top:330px;left:16px;display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none}
 .mnav-resume:hover{color:var(--accent)}
 .mnav-rule{position:absolute;top:400px;left:16px;right:16px;height:.5px;background:var(--line)}
+.mnav:not(.is-open) .mnav-rule{display:none}
 @media (max-width:900px){
   .mnav{display:block;position:fixed;left:50%;bottom:16px;transform:translate(-50%);z-index:40}
   .mnav-veil{display:block;position:fixed;inset:0;z-index:39;background:rgba(10,6,4,.32);visibility:hidden;opacity:0;transition:opacity .25s ease}
