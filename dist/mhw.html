@@ -132,6 +132,8 @@ a:focus-visible,button:focus-visible{outline:1px solid currentColor;outline-offs
   object-fit:cover;object-position:50% 50%;
   transform:scale(1.06);transition:transform 1.25s cubic-bezier(.16,.72,.18,1)}
 .card.on img{transform:scale(1)}
+.card{user-select:none;-webkit-user-drag:none}
+.card img{-webkit-user-drag:none;user-select:none;pointer-events:none}
 .card .cempty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#FFF9F7;
   background:#100B08;background-image:radial-gradient(74% 68% at 50% 38%,rgba(255,86,16,.16),transparent 76%);
   color:var(--ink);text-align:center;padding:0 30px}
@@ -1939,7 +1941,7 @@ body[data-theme="dark"] .pnext{background:#151210}
       var cmEl=document.getElementById('cmeta');
       var cmRoll=document.getElementById('cmroll');
       var eL=document.querySelector('.edge.l'), eR=document.querySelector('.edge.r');
-      var ci=0, cdrag=false, cMoved=false, cDragX=0, cLock=false, cpaused=false, ROW=50;
+      var ci=0, cdrag=false, cMoved=false, cDragX=0, cDragY=0, cLock=false, cpaused=false, ROW=50;
       var cmRows=[];
       function buildCm(){
         if(!cmRoll) return;
@@ -2017,13 +2019,14 @@ body[data-theme="dark"] .pnext{background:#151210}
       });
       cardsWrap.addEventListener('pointerdown',function(e){
         if(e.pointerType==='mouse'&&e.button!==0) return;
-        cdrag=true; cMoved=false; cDragX=e.clientX;
+        cdrag=true; cMoved=false; cDragX=e.clientX; cDragY=e.clientY;
+        if(cardsWrap.setPointerCapture){ try{ cardsWrap.setPointerCapture(e.pointerId); }catch(_){} }
       });
       cardsWrap.addEventListener('pointermove',function(e){
         if(!cdrag) return;
-        var dx=e.clientX-cDragX;
-        if(Math.abs(dx)>52){
-          cMoved=true; go(dx<0?ci+1:ci-1); cdrag=false;
+        var dx=e.clientX-cDragX, dy=e.clientY-cDragY;
+        if(Math.abs(dy)>=Math.abs(dx)&&Math.abs(dy)>36){
+          cMoved=true; go(dy<0?ci+1:ci-1); cdrag=false;
           setTimeout(function(){ cMoved=false; },400);
         }
       });
