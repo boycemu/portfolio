@@ -14,6 +14,7 @@
   --line:rgba(26,9,2,.13);
   --line-2:rgba(26,9,2,.07);
   --muted:rgba(26,9,2,.54);
+  --glass:rgba(255,249,247,.84);
   --accent:#FF5610;
   --orange:#FF5610;
   --pink:#E2419B;
@@ -29,6 +30,7 @@
 }
 [data-theme="dark"]{
   --cm-bg:rgba(16,14,12,.72);
+  --glass:rgba(16,14,12,.78);
   --paper:#100E0C;
   --ink:#FFF9F7;
   --frame:#050403;
@@ -257,8 +259,8 @@ a:focus-visible,button:focus-visible{outline:1px solid currentColor;outline-offs
 .vmodal-close{position:absolute;top:-44px;right:0;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .vmodal-close svg{width:14px;height:14px}
 .vmodal-title{position:absolute;left:0;top:-44px;color:#fff;font-size:14px;letter-spacing:.02em}
-@media (max-width:859px){.ow-grid{grid-template-columns:repeat(2,1fr)}.lg-a,.lg-b,.lg-c{grid-area:auto}.ow-tile.lg{grid-column:span 2;grid-row:span 2}}
-@media (max-width:520px){.ow-grid{grid-template-columns:1fr}.ow-tile.lg{grid-column:span 1;grid-row:span 1}.lg-a,.lg-b,.lg-c{grid-area:auto}
+@media (max-width:900px){.ow-grid{grid-template-columns:repeat(2,1fr)}.lg-a,.lg-b,.lg-c{grid-area:auto}.ow-tile.lg{grid-column:span 2;grid-row:span 2}}
+@media (max-width:600px){.ow-grid{grid-template-columns:1fr}.ow-tile.lg{grid-column:span 1;grid-row:span 1}.lg-a,.lg-b,.lg-c{grid-area:auto}
 .pl-other-count{font-size:44px;margin-top:14px}
 .pl-other-copy{margin-top:14px}
 .pl-other-art{gap:8px}
@@ -377,7 +379,7 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
   transform:rotate(45deg);margin-top:-3px;animation:shbob 1.7s cubic-bezier(.4,0,.2,1) infinite}
 @keyframes shbob{0%,100%{transform:translateY(-2px) rotate(45deg)}50%{transform:translateY(2px) rotate(45deg)}}
 @media (prefers-reduced-motion:reduce){.shint .sh-ar{animation:none}}
-@media (max-width:859px){.shint{position:fixed;bottom:18px;z-index:10}}
+@media (max-width:900px){.shint{position:fixed;bottom:18px;z-index:10}}
 .pclose{position:absolute;right:16px;bottom:16px;z-index:11;display:none;align-items:center;justify-content:center;width:44px;height:30px;padding:0;border:1px solid transparent;border-radius:7px;background:#FFF9F7;color:#1A0902;cursor:pointer;box-shadow:0 1px 6px rgba(26,9,2,.16);transition:background .2s,color .2s,border-color .2s}
 .pclose.on{display:flex}
 .pclose svg{width:12px;height:12px;display:block}
@@ -453,7 +455,7 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* ============ 断点 ============ */
-@media (min-width:860px){
+@media (min-width:901px){
   .hero{grid-template-columns:42% 1fr;height:calc(100vh - 16px);min-height:660px}
   .hero-l{min-height:0;padding:26px 30px 22px}
   .dial{width:clamp(240px,92vw,400px)}
@@ -482,7 +484,33 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
   .dgal img:first-child{height:100%;max-height:560px}
   .dgal img:not(:first-child){height:184px}
 }
-@media (max-width:859px){
+/* ===== 移动端底部胶囊导航（≤900px 显示） ===== */
+.mnav,.mnav-veil{display:none}
+.mnav-card{position:relative;touch-action:none;overscroll-behavior:contain;width:min(350px,calc(100vw - 24px));height:48px;overflow:hidden;border-radius:12px;border:.5px solid var(--line);background:var(--glass);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:height .38s cubic-bezier(.22,1,.36,1)}
+.mnav.is-open .mnav-card{height:430px}
+.mnav-bar{position:absolute;left:0;right:0;bottom:0;height:47px;display:flex;align-items:center;z-index:2}
+.mnav-toggle{flex:1 1 auto;align-self:stretch;display:flex;align-items:center;gap:12px;padding:0 0 0 15px;border:0;background:none;color:var(--ink);cursor:pointer;text-align:left}
+.mnav-burger{display:block;flex:0 0 auto;fill:var(--ink)}
+.mnav-label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.mnav-squares{display:flex;gap:4px;padding-right:4px;transition:opacity .2s ease}
+.mnav.is-open .mnav-squares{opacity:0;pointer-events:none}
+.mnav-square{flex:0 0 auto;width:40px;height:40px;border:0;border-radius:8px;background:var(--line-2);color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.mnav-sheet{outline:none;position:absolute;left:0;right:0;bottom:0;height:430px;z-index:1;pointer-events:none}
+.mnav.is-open .mnav-sheet{pointer-events:auto}
+.mnav-list{position:absolute;top:36px;left:16px;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.mnav-item{display:block;padding:0;font-family:var(--sans);font-weight:600;font-size:30px;line-height:1.1;letter-spacing:-.01em;color:var(--muted);text-decoration:none;white-space:nowrap;position:relative;transition:color .2s ease,padding-left .5s cubic-bezier(.22,1,.36,1)}
+.mnav-item::before{content:"";position:absolute;left:0;top:50%;width:8px;height:8px;margin-top:-4px;background:var(--accent);transform:scale(0);transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.mnav-item.on,.mnav-item:hover{color:var(--ink)}
+.mnav.is-open .mnav-item.on{padding-left:24px}
+.mnav.is-open .mnav-item.on::before{transform:scale(1)}
+.mnav-talk{position:absolute;top:286px;left:16px;margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mnav-email{position:absolute;top:306px;left:16px;display:flex;align-items:center;gap:4px;font-size:14px;color:var(--ink);text-decoration:none}
+.mnav-rule{position:absolute;top:400px;left:16px;right:16px;height:.5px;background:var(--line)}
+@media (max-width:900px){
+  .mnav{display:block;position:fixed;left:50%;bottom:16px;transform:translate(-50%);z-index:40}
+  .mnav-veil{display:block;position:fixed;inset:0;z-index:39;background:rgba(10,6,4,.32);visibility:hidden;opacity:0;transition:opacity .25s ease}
+  .mnav-veil.on{visibility:visible;opacity:1}
+  .rnav{display:none}
   .rnav{gap:10px;flex-wrap:wrap}
   .mail{font-size:9px}
   .hero-r{min-height:0;background:var(--paper)}
@@ -516,6 +544,9 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
   .pl-row{grid-template-columns:74px 1fr;padding:11px 0}
   .sub.proj-on{padding:0}
   .pclose{position:fixed;right:14px;bottom:16px;width:44px;height:32px;border-radius:7px}
+  .hero-l .snd,.hero-l .toggle{display:none}
+  .sub,.sub.abt-on,.sub.other-on{padding-bottom:88px}
+  .sub.abt-on,.sub.other-on{position:static;inset:auto;height:auto;overflow:visible}
 }
 /* 项目详情：右栏只做图片流（介绍已移到左栏）
    图贴满右栏四边、不留边距，导航浮在图上 */
@@ -544,7 +575,7 @@ body[data-theme="dark"] .pnext{background:#151210}
   font-size:11.5px;letter-spacing:.075em;text-transform:uppercase;color:var(--muted);
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .pnext .nname{margin:0;width:min(100%,481px);font-size:clamp(20px,2.05vw,31px);font-weight:600;line-height:1.24;color:var(--ink)}
-@media (max-width:859px){.pnext{min-height:auto;padding:34px 18px 42px}.pnext .nxl{font-size:clamp(46px,14vw,64px)}}
+@media (max-width:900px){.pnext{min-height:auto;padding:34px 18px 42px}.pnext .nxl{font-size:clamp(46px,14vw,64px)}}
 @media (prefers-reduced-motion:reduce){.dgal.rv img:not(.nximg){opacity:1;transform:none;transition:none}}
 .hero-r:has(#sub.proj-on:not([hidden])) .rnav{background:transparent;color:#FFF9F7;mix-blend-mode:normal;text-shadow:none}
 .hero-r:has(#sub.proj-on:not([hidden])) .rnav-mid a{opacity:.97}
@@ -602,7 +633,7 @@ body[data-theme="dark"] .pnext{background:#151210}
 [data-theme="dark"] .nc.paper{background:#1D1815;color:var(--ink);border-color:rgba(255,249,247,.18)}
 [data-theme="dark"] .nc.ink{background:#241C17}
 [data-theme="dark"] .nc.soft{background:#3E1A09;color:#FFD9C6}
-@media (max-width:859px){
+@media (max-width:900px){
   .nf{padding:52px 14px 16px}
   .nf-stage{height:clamp(150px,23vh,186px)}
   .nf-404{font-size:clamp(70px,19vw,104px)}
@@ -664,7 +695,7 @@ body[data-theme="dark"] .pnext{background:#151210}
 .ld-fb.on{display:block}
 .ld-fb svg{width:100%;height:100%;display:block;animation:fbFloat 2.4s ease-in-out infinite}
 @keyframes fbFloat{50%{transform:translateY(-2px)}}
-@media (max-width:859px){ .ld-lot{width:clamp(104px,27vw,144px)} }
+@media (max-width:900px){ .ld-lot{width:clamp(104px,27vw,144px)} }
 
 @media (prefers-reduced-motion:reduce){.loader{display:none}}
 @media (prefers-reduced-motion:reduce){
@@ -799,6 +830,47 @@ body[data-theme="dark"] .pnext{background:#151210}
       <div class="hero-scroll"><span>SCROLL ↓</span></div>
     </div>
   </section>
+
+  <!-- ===== 移动端底部胶囊导航（≤900px） ===== -->
+  <div class="mnav-veil" id="mnavVeil" aria-hidden="true"></div>
+  <nav class="mnav" id="mnav" aria-label="移动端导航">
+    <div class="mnav-card">
+      <div class="mnav-bar">
+        <button class="mnav-toggle" id="mnavToggle" type="button" aria-expanded="false" aria-controls="mnavSheet">
+          <svg class="mnav-burger" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="4" cy="4" r="1.3"/><circle cx="10" cy="4" r="1.3"/><circle cx="16" cy="4" r="1.3"/>
+            <circle cx="4" cy="10" r="1.3"/><circle cx="10" cy="10" r="1.3"/><circle cx="16" cy="10" r="1.3"/>
+            <circle cx="4" cy="16" r="1.3"/><circle cx="10" cy="16" r="1.3"/><circle cx="16" cy="16" r="1.3"/>
+          </svg>
+          <span class="mnav-label" id="mnavLabel">作品内容</span>
+        </button>
+        <div class="mnav-squares">
+          <button class="mnav-square" id="mnavSnd" type="button" aria-label="背景音乐">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11 5 6.5 9H3.5v6h3L11 19V5z" fill="currentColor" stroke="none"/>
+              <path d="M15 9.5a4 4 0 0 1 0 5M17.5 7a7.5 7.5 0 0 1 0 10"/>
+            </svg>
+          </button>
+          <button class="mnav-square" id="mnavInv" type="button" aria-label="切换深浅色主题">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M12 3.5a8.5 8.5 0 0 0 0 17z" fill="currentColor" stroke="none"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="mnav-sheet" id="mnavSheet" tabindex="-1">
+        <ul class="mnav-list">
+          <li><a href="#work" data-info="work" class="mnav-item">作品内容</a></li>
+          <li><a href="#about" data-info="about" class="mnav-item">个人信息</a></li>
+          <li><a href="#other" data-info="other" class="mnav-item">其他视觉设计</a></li>
+        </ul>
+        <p class="mnav-talk">LET'S TALK</p>
+        <a class="mnav-email" href="mailto:cxcyboyce828@163.com">CXCYBOYCE828@163.COM <span aria-hidden="true">↗</span></a>
+        <div class="mnav-rule"></div>
+      </div>
+    </div>
+  </nav>
     <!-- 下方区块已收进导航弹层，页面只留首屏 -->
   <div id="infoSrc" hidden>
     <div data-info="work">
@@ -2003,6 +2075,7 @@ body[data-theme="dark"] .pnext{background:#151210}
       subEl.hidden=false; subEl.scrollTop=0;
       if(key==='other'){ [].slice.call(subBody.querySelectorAll('video')).forEach(function(v){ v.muted=true; var p=v.play(); if(p&&p.catch) p.catch(function(){}); }); }
       navAs.forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-info')===key); });
+      if(window.__mnavSync) window.__mnavSync(key);
     }
     /* 详情图流：滚入视口时逐张显现（照参考站一张张出现） */
     var galSweepOn=false;
@@ -2234,6 +2307,7 @@ body[data-theme="dark"] .pnext{background:#151210}
       if(heroL) heroL.classList.remove('about-mode','on-proj','other-mode');
       if(pcEl) pcEl.classList.remove('on');
       navAs.forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-info')==='work'); });
+      if(window.__mnavSync) window.__mnavSync('work');
     }
     navAs.forEach(function(a){
       a.addEventListener('click',function(e){
@@ -2722,6 +2796,49 @@ body[data-theme="dark"] .pnext{background:#151210}
 /* ---------- 初始路由：等所有模块就绪后按 hash 决定是否直接进二级页 ---------- */
 (function(){
   if(window.__routeHash) setTimeout(window.__routeHash,0);
+})();
+
+/* ---------- 移动端底部胶囊导航（≤900px） ---------- */
+(function(){
+  var mnav=document.getElementById('mnav');
+  if(!mnav) return;
+  var veil=document.getElementById('mnavVeil');
+  var toggle=document.getElementById('mnavToggle');
+  var label=document.getElementById('mnavLabel');
+  var items=Array.prototype.slice.call(mnav.querySelectorAll('.mnav-item'));
+  var snd=document.getElementById('mnavSnd');
+  var inv=document.getElementById('mnavInv');
+  var LABELS={work:'作品内容',about:'个人信息',other:'其他视觉设计'};
+
+  function open(){ mnav.classList.add('is-open'); veil.classList.add('on'); toggle.setAttribute('aria-expanded','true'); }
+  function close(){ mnav.classList.remove('is-open'); veil.classList.remove('on'); toggle.setAttribute('aria-expanded','false'); }
+
+  toggle.addEventListener('click',function(){ mnav.classList.contains('is-open')?close():open(); });
+  veil.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+
+  function setActive(k){
+    items.forEach(function(it){ it.classList.toggle('on', it.getAttribute('data-info')===k); });
+    if(label && LABELS[k]) label.textContent=LABELS[k];
+  }
+
+  items.forEach(function(a){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var k=a.getAttribute('data-info');
+      var src=document.querySelector('.rnav-mid a[data-info="'+k+'"]');
+      if(src) src.click();
+      setActive(k);
+      close();
+    });
+  });
+
+  if(inv){ inv.addEventListener('click',function(){ var o=document.getElementById('invert'); if(o) o.click(); }); }
+  if(snd){ snd.addEventListener('click',function(){ var s=document.getElementById('snd'); if(s) s.click(); }); }
+
+  var cur=document.querySelector('.rnav-mid a.on');
+  if(cur) setActive(cur.getAttribute('data-info'));
+  window.__mnavSync=setActive;
 })();
 </script>
 </div>
