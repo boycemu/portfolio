@@ -94,7 +94,7 @@ a:focus-visible,button:focus-visible{outline:1px solid currentColor;outline-offs
   .horizon{display:none}
   .hills{display:none}
   .proj{position:absolute;inset:0;z-index:1;overflow:hidden;background:var(--paper)}
-.cards{position:absolute;inset:58px 0 0 0;z-index:2;overflow:hidden;touch-action:pan-y;background:var(--paper)}
+.cards{position:absolute;inset:58px 0 0 0;z-index:2;overflow:hidden;touch-action:none;background:var(--paper)}
   .card{position:absolute;left:50%;right:auto;top:50%;bottom:auto;
   width:220px;height:220px;display:block;padding:0;border:0;border-radius:8px;
   overflow:hidden;background:var(--grad,var(--paper));cursor:pointer;
@@ -2017,21 +2017,41 @@ body[data-theme="dark"] .pnext{background:#151210}
           else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); go(ci-1); }
         });
       });
+      function swipeBy(dx,dy){
+        if(Math.abs(dy)>=Math.abs(dx)&&Math.abs(dy)>36){
+          cMoved=true; go(dy<0?ci+1:ci-1); cdrag=false;
+          setTimeout(function(){ cMoved=false; },400);
+          return true;
+        }
+        return false;
+      }
+      // 鼠标：Pointer Events
       cardsWrap.addEventListener('pointerdown',function(e){
-        if(e.pointerType==='mouse'&&e.button!==0) return;
+        if(e.pointerType!=='mouse'||e.button!==0) return;
         cdrag=true; cMoved=false; cDragX=e.clientX; cDragY=e.clientY;
         if(cardsWrap.setPointerCapture){ try{ cardsWrap.setPointerCapture(e.pointerId); }catch(_){} }
       });
       cardsWrap.addEventListener('pointermove',function(e){
-        if(!cdrag) return;
-        var dx=e.clientX-cDragX, dy=e.clientY-cDragY;
-        if(Math.abs(dy)>=Math.abs(dx)&&Math.abs(dy)>36){
-          cMoved=true; go(dy<0?ci+1:ci-1); cdrag=false;
-          setTimeout(function(){ cMoved=false; },400);
-        }
+        if(!cdrag||e.pointerType!=='mouse') return;
+        swipeBy(e.clientX-cDragX,e.clientY-cDragY);
       });
       cardsWrap.addEventListener('pointerup',function(){ cdrag=false; });
       cardsWrap.addEventListener('pointercancel',function(){ cdrag=false; });
+      // 触摸：原始 touch 事件，接管垂直滑动并阻止原生滚动
+      cardsWrap.addEventListener('touchstart',function(e){
+        if(e.touches.length!==1) return;
+        var t=e.touches[0];
+        cdrag=true; cMoved=false; cDragX=t.clientX; cDragY=t.clientY;
+      },{passive:true});
+      cardsWrap.addEventListener('touchmove',function(e){
+        if(!cdrag) return;
+        var t=e.touches[0];
+        var dx=t.clientX-cDragX, dy=t.clientY-cDragY;
+        if(Math.abs(dy)>=Math.abs(dx)){ e.preventDefault(); }
+        swipeBy(dx,dy);
+      },{passive:false});
+      cardsWrap.addEventListener('touchend',function(){ cdrag=false; });
+      cardsWrap.addEventListener('touchcancel',function(){ cdrag=false; });
       var wheelHost=document.querySelector('.hero-r')||cardsWrap;
       function detailOpen(){ var d=document.getElementById('detail'); return d && !d.hidden; }
       wheelHost.addEventListener('wheel',function(e){
