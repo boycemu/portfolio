@@ -568,6 +568,7 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
   .pinfo.on{background:var(--accent);color:#fff}
   .pcard{display:block;position:fixed;left:16px;right:16px;bottom:16px;z-index:44;max-height:72svh;overflow-y:auto;overscroll-behavior:contain;border-radius:16px;background:var(--paper);color:var(--ink);padding:76px 20px 24px;box-shadow:0 12px 40px rgba(26,9,2,.28);transform:translateY(calc(100% + 24px));transition:transform .4s cubic-bezier(.22,1,.36,1),visibility .4s;visibility:hidden}
   .pcard.on{transform:none;visibility:visible}
+  body:not(.detail-on) .pcard{display:none}
   .pcard-close{position:absolute;top:18px;right:18px}
   .pcard .pl-row{grid-template-columns:74px 1fr;padding:11px 0}
   .hero-l .snd,.hero-l .toggle{display:none}
