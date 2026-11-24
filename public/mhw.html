@@ -161,6 +161,7 @@ a:focus-visible,button:focus-visible{outline:1px solid currentColor;outline-offs
   transition:width .42s ease,background .42s ease,opacity .42s ease}
 .cmticks i:nth-child(5){width:30px;
   background:rgba(255,249,247,.98);filter:drop-shadow(0 0 3px rgba(0,0,0,.4))}
+.mwchip{display:none}
 .figure{display:none}
   .scene::after{display:none}
 .duo{display:none;position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -506,6 +507,10 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
 .mnav-squares{display:flex;gap:4px;padding-right:4px;transition:opacity .2s ease}
 .mnav.is-open .mnav-squares{opacity:0;pointer-events:none}
 .mnav-square{flex:0 0 auto;width:40px;height:40px;border:0;border-radius:8px;background:var(--line-2);color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.mnav-dial{padding:0}
+.mnav-dial-svg{width:26px;height:26px;display:block}
+.mnav-dial-tick{stroke:currentColor;stroke-width:1;opacity:.28;stroke-linecap:round}
+.mnav-dial-tick.on{stroke:var(--accent);opacity:.9}
 .mnav-sheet{outline:none;position:absolute;left:0;right:0;bottom:0;height:430px;z-index:1;pointer-events:none}
 .mnav.is-open .mnav-sheet{pointer-events:auto}
 .mnav-list{position:absolute;top:36px;left:16px;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -544,14 +549,15 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
     -webkit-mask-image:none;mask-image:none;
     background:rgba(12,8,5,.58);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
     border-radius:12px;padding:12px 16px;width:max-content;max-width:88%}
-  .cmroll{position:static}
-  .cmrow{position:static;display:flex;flex-direction:column;align-items:center;gap:6px;
-    transform:none!important;opacity:1!important}
-  .cmrow:not(.on){display:none}
-  .cmrow .cc{order:-1;letter-spacing:.1em!important;font-size:clamp(11px,3vw,13px)!important}
-  .cmrow .nn{font-size:clamp(16px,4.4vw,20px)!important}
+  .cmroll{display:none}
   .cmticks{display:none}
   .cmrow .ll{display:none}
+  .mwchip{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:8;display:flex;align-items:center;gap:10px;max-width:84%;
+    padding:7px 16px 7px 7px;border-radius:999px;background:rgba(16,14,12,.78);color:#FFF9F7;
+    box-shadow:0 6px 22px rgba(10,6,3,.32);pointer-events:none}
+  .mwchip-av{width:32px;height:32px;border-radius:50%;overflow:hidden;flex:0 0 auto;background:var(--line-2)}
+  .mwchip-av img{width:100%;height:100%;object-fit:cover;display:block}
+  .mwchip-name{font-weight:500;font-size:14px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .edge{display:none}
   .hero-scroll{display:none}
   .hero-l.on-proj{display:none}
@@ -823,6 +829,10 @@ body[data-theme="dark"] .pnext{background:#151210}
           <div class="cmticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           <div class="cmroll" id="cmroll"></div>
         </div>
+        <div class="mwchip" id="mwchip" aria-hidden="true">
+          <span class="mwchip-av"><img id="mwchipImg" alt=""></span>
+          <span class="mwchip-name" id="mwchipName"></span>
+        </div>
         <p class="chint">点击卡片 · 查看项目详情</p>
       </div>
 
@@ -888,6 +898,14 @@ body[data-theme="dark"] .pnext{background:#151210}
           <span class="mnav-label" id="mnavLabel">作品内容</span>
         </button>
         <div class="mnav-squares">
+          <button class="mnav-square mnav-dial" id="mnavDial" type="button" aria-label="当前时间">
+            <svg class="mnav-dial-svg" viewBox="0 0 40 40" aria-hidden="true">
+              <g id="mnavDialTicks"></g>
+              <line id="mnavDialHr" x1="20" y1="20" x2="20" y2="13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <line id="mnavDialMin" x1="20" y1="20" x2="20" y2="10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+              <circle cx="20" cy="20" r="1.7" fill="var(--accent)"/>
+            </svg>
+          </button>
           <button class="mnav-square" id="mnavSnd" type="button" aria-label="背景音乐">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M11 5 6.5 9H3.5v6h3L11 19V5z" fill="currentColor" stroke="none"/>
@@ -1964,6 +1982,9 @@ body[data-theme="dark"] .pnext{background:#151210}
         });
         if(eL) eL.textContent=(ci+1<10?'0':'')+(ci+1);
         if(eR) eR.textContent=cards[ci].getAttribute('data-y');
+        var chipImg=document.getElementById('mwchipImg'), chipName=document.getElementById('mwchipName');
+        if(chipImg){ var _pi=cards[ci].querySelector('img'); if(_pi) chipImg.src=_pi.src; else chipImg.removeAttribute('src'); }
+        if(chipName) chipName.textContent=(PROJECTS[ci]?PROJECTS[ci].name:cards[ci].getAttribute('data-name'))||'';
       }
       function go(i){
         var nx=(i+cards.length)%cards.length;
@@ -2884,6 +2905,29 @@ body[data-theme="dark"] .pnext{background:#151210}
   var snd=document.getElementById('mnavSnd');
   var inv=document.getElementById('mnavInv');
   var LABELS={work:'作品内容',about:'个人信息',other:'其他视觉设计'};
+
+  /* 导航紧凑弧线时钟：60 根放射刻度 + 时分指针，随秒更新 */
+  var dialTicks=document.getElementById('mnavDialTicks'),
+      hrLine=document.getElementById('mnavDialHr'),
+      minLine=document.getElementById('mnavDialMin'), tickEls=[];
+  if(dialTicks){
+    for(var ti=0;ti<60;ti++){
+      var ang=ti*6*Math.PI/180, major=ti%15===0, r1=major?13.5:15.5, r2=18;
+      var ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+      ln.setAttribute('x1',20+Math.sin(ang)*r1); ln.setAttribute('y1',20-Math.cos(ang)*r1);
+      ln.setAttribute('x2',20+Math.sin(ang)*r2); ln.setAttribute('y2',20-Math.cos(ang)*r2);
+      ln.setAttribute('class','mnav-dial-tick');
+      dialTicks.appendChild(ln); tickEls.push(ln);
+    }
+  }
+  function syncDial(){
+    var d=new Date(), s=d.getSeconds()+d.getMilliseconds()/1000, m=d.getMinutes()+s/60, h=(d.getHours()%12)+m/60;
+    if(hrLine) hrLine.setAttribute('transform','rotate('+(h*30)+' 20 20)');
+    if(minLine) minLine.setAttribute('transform','rotate('+(m*6)+' 20 20)');
+    var si=Math.round(s)%60;
+    tickEls.forEach(function(el,i){ el.classList.toggle('on',i===si); });
+  }
+  syncDial(); setInterval(syncDial,1000);
 
   function open(){ mnav.classList.add('is-open'); veil.classList.add('on'); toggle.setAttribute('aria-expanded','true'); }
   function close(){ mnav.classList.remove('is-open'); veil.classList.remove('on'); toggle.setAttribute('aria-expanded','false'); }
