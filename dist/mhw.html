@@ -133,7 +133,7 @@ a:focus-visible,button:focus-visible{outline:1px solid currentColor;outline-offs
   transform:scale(1.06);transition:transform 1.25s cubic-bezier(.16,.72,.18,1)}
 .card.on img{transform:scale(1)}
 .card{user-select:none;-webkit-user-drag:none}
-.card img{-webkit-user-drag:none;user-select:none;pointer-events:none}
+.card img{-webkit-user-drag:none;user-select:none}
 .card .cempty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#FFF9F7;
   background:#100B08;background-image:radial-gradient(74% 68% at 50% 38%,rgba(255,86,16,.16),transparent 76%);
   color:var(--ink);text-align:center;padding:0 30px}
@@ -1922,7 +1922,7 @@ body[data-theme="dark"] .pnext{background:#151210}
         var inner=p.hideCard
           ? ''
           : (p.img
-            ? '<img src="'+p.img+'" alt="'+(p.alt||p.name)+'">'
+            ? '<img src="'+p.img+'" alt="'+(p.alt||p.name)+'" draggable="false">'
             : '<span class="cempty"><em>P'+p.no+'</em>'+p.name+' · '+(p.sub||'')+'<b>'+(p.note||'')+'</b></span>');
         return '<button class="card'+(i===CARD_START?' on':'')+(p.hideCard?' noimg':'')+'" data-open="'+p.id+'" data-tone="'+p.tone
           +'" data-name="'+p.name+'" data-cat="'+p.cat+'" data-y="'+p.year
@@ -1939,7 +1939,7 @@ body[data-theme="dark"] .pnext{background:#151210}
       var cmEl=document.getElementById('cmeta');
       var cmRoll=document.getElementById('cmroll');
       var eL=document.querySelector('.edge.l'), eR=document.querySelector('.edge.r');
-      var ci=0, cdrag=false, cMoved=false, cDragX=0, cDragY=0, cLock=false, cpaused=false, ROW=50;
+      var ci=0, cdrag=false, cMoved=false, cDragX=0, cDragY=0, cLock=false, cpaused=false, cJust=false, cJustT=0, ROW=50;
       var cmRows=[];
       function buildCm(){
         if(!cmRoll) return;
@@ -2017,7 +2017,7 @@ body[data-theme="dark"] .pnext{background:#151210}
       });
       function swipeBy(dx,dy){
         if(Math.abs(dy)>=Math.abs(dx)&&Math.abs(dy)>36){
-          cMoved=true; go(dy<0?ci+1:ci-1); cdrag=false;
+          cMoved=true; cJust=true; cJustT=Date.now(); go(dy<0?ci+1:ci-1); cdrag=false;
           setTimeout(function(){ cMoved=false; },400);
           return true;
         }
@@ -2035,6 +2035,7 @@ body[data-theme="dark"] .pnext{background:#151210}
       });
       cardsWrap.addEventListener('pointerup',function(){ cdrag=false; });
       cardsWrap.addEventListener('pointercancel',function(){ cdrag=false; });
+      cardsWrap.addEventListener('dragstart',function(e){ e.preventDefault(); });
       // 触摸：原始 touch 事件，接管垂直滑动并阻止原生滚动
       cardsWrap.addEventListener('touchstart',function(e){
         if(e.touches.length!==1) return;
@@ -2081,7 +2082,9 @@ body[data-theme="dark"] .pnext{background:#151210}
 
     /* ---------- 统一点击分发 ---------- */
     document.addEventListener('click',function(e){
+      if(cJust && Date.now()-cJustT<500){ cJust=false; e.preventDefault(); e.stopPropagation(); return; }
       var card=e.target.closest('.card');
+      if(!card){ var hit=document.elementFromPoint(e.clientX,e.clientY); if(hit) card=hit.closest('.card'); }
       var scene=document.querySelector('.scene');
       var dEl=document.getElementById('detail');
       // 点封面（或浮在封面上的时间轴文字）直接进入详情：详情页不再显示时间轴与遮罩
