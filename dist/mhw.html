@@ -390,6 +390,16 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
 .tcaret.blink{animation:tcaretBlink .6s steps(1,end) 3 forwards}
 @keyframes tcaretBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
 .pclose:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+/* 详情信息钮 / 底部信息卡（手机端使用，桌面隐藏） */
+.pinfo,.pcard{display:none}
+.pcard-close{display:inline-flex;align-items:center;gap:6px;border:0;background:none;color:var(--ink);cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.pcard-close svg{width:12px;height:12px;display:block}
+.pcard-title{margin:0 0 18px;font-size:clamp(20px,5vw,28px);line-height:1.12;letter-spacing:-.01em;font-weight:600}
+.pcard-txt{margin-top:22px;display:grid;gap:16px}
+.pcard-txt .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pcard-txt p{margin:7px 0 0;font-size:12.5px;line-height:1.78;color:var(--ink);opacity:.86}
+.pcard-txt ul{margin:7px 0 0;padding-left:15px}
+.pcard-txt li{font-size:12.5px;line-height:1.72;margin-bottom:5px;color:var(--ink);opacity:.86}
 .pl-cat{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;margin-left:auto}
 .pl-title{margin:0 0 clamp(20px,3vh,34px);font-size:clamp(22px,2.9vw,38px);line-height:1.1;letter-spacing:-.02em;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:clip}
 .pl-rows{display:grid}
@@ -544,11 +554,22 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
   .cmrow .ll{display:none}
   .edge{display:none}
   .hero-scroll{display:none}
+  .hero-l.on-proj{display:none}
   .pl-proj{padding:50px 18px 26px;bottom:56px;border-radius:0}
   .pl-title{font-size:clamp(20px,5.4vw,30px)}
   .pl-row{grid-template-columns:74px 1fr;padding:11px 0}
   .sub.proj-on{padding:0}
-  .pclose{position:fixed;right:14px;top:16px;bottom:auto;width:44px;height:32px;border-radius:7px;z-index:45}
+  .hero-r:has(#sub.proj-on:not([hidden])) .scene{display:none}
+  body.detail-on .mnav, body.detail-on .mnav-veil{display:none}
+  .pclose{position:fixed;right:16px;bottom:16px;top:auto;width:40px;height:40px;border-radius:10px;z-index:45}
+  .pinfo{position:fixed;left:16px;bottom:16px;width:40px;height:40px;border:0;border-radius:10px;background:#FFF9F7;color:#1A0902;box-shadow:0 1px 6px rgba(26,9,2,.16);place-items:center;cursor:pointer;z-index:45}
+  body.detail-on .pinfo{display:grid}
+  .pinfo svg{width:18px;height:18px;display:block}
+  .pinfo.on{background:var(--accent);color:#fff}
+  .pcard{display:block;position:fixed;left:16px;right:16px;bottom:16px;z-index:44;max-height:72svh;overflow-y:auto;overscroll-behavior:contain;border-radius:16px;background:var(--paper);color:var(--ink);padding:76px 20px 24px;box-shadow:0 12px 40px rgba(26,9,2,.28);transform:translateY(calc(100% + 24px));transition:transform .4s cubic-bezier(.22,1,.36,1),visibility .4s;visibility:hidden}
+  .pcard.on{transform:none;visibility:visible}
+  .pcard-close{position:absolute;top:18px;right:18px}
+  .pcard .pl-row{grid-template-columns:74px 1fr;padding:11px 0}
   .hero-l .snd,.hero-l .toggle{display:none}
   .sub,.sub.abt-on,.sub.other-on{padding-bottom:88px}
   .sub.abt-on,.sub.other-on{position:static;inset:auto;height:auto;overflow:visible}
@@ -820,6 +841,18 @@ body[data-theme="dark"] .pnext{background:#151210}
       <button class="pclose" id="pclose" type="button" aria-label="关闭作品详情">
         <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.6 1.6 L10.4 10.4 M10.4 1.6 L1.6 10.4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
       </button>
+      <button class="pinfo" id="pinfo" type="button" aria-label="项目信息" aria-expanded="false">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v4.4M10 6.3v.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <aside class="pcard" id="pcard" aria-hidden="true">
+        <button class="pcard-close" id="pcardClose" type="button" aria-label="关闭项目信息">
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.6 1.6 L10.4 10.4 M10.4 1.6 L1.6 10.4" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+          <span>CLOSE</span>
+        </button>
+        <h3 class="pcard-title" id="pcardTitle"></h3>
+        <div class="pcard-rows" id="pcardRows"></div>
+        <div class="pcard-txt" id="pcardTxt"></div>
+      </aside>
 
       <div class="vmodal" id="vModal" hidden role="dialog" aria-modal="true" aria-label="视频播放">
         <div class="vmodal-mask" data-vclose></div>
@@ -2048,6 +2081,20 @@ body[data-theme="dark"] .pnext{background:#151210}
     var subBack=document.getElementById('subBack'), infoSrc=document.getElementById('infoSrc');
     var pcEl=document.getElementById('pclose');
     if(pcEl) pcEl.addEventListener('click',function(){ closePage(); });
+    var pinfoEl=document.getElementById('pinfo'),
+        pcardEl=document.getElementById('pcard'),
+        pcardClose=document.getElementById('pcardClose'),
+        pcardTitle=document.getElementById('pcardTitle'),
+        pcardRows=document.getElementById('pcardRows'),
+        pcardTxt=document.getElementById('pcardTxt');
+    function setCard(open){
+      if(!pcardEl) return;
+      pcardEl.classList.toggle('on',open);
+      pcardEl.setAttribute('aria-hidden',String(!open));
+      if(pinfoEl){ pinfoEl.classList.toggle('on',open); pinfoEl.setAttribute('aria-expanded',String(open)); }
+    }
+    if(pinfoEl) pinfoEl.addEventListener('click',function(){ setCard(!pcardEl.classList.contains('on')); });
+    if(pcardClose) pcardClose.addEventListener('click',function(){ setCard(false); });
     var navAs=[].slice.call(document.querySelectorAll('.rnav-mid a[data-info]'));
     function pageOpen(){ return subEl && !subEl.hidden; }
     var tAbout=document.getElementById('t-about'), t404=document.getElementById('t-404');
@@ -2087,6 +2134,8 @@ body[data-theme="dark"] .pnext{background:#151210}
         if(heroL){ heroL.classList.remove('about-mode','on-proj','other-mode'); if(key==='other') heroL.classList.add('other-mode'); }
         if(pcEl) pcEl.classList.remove('on');
       }
+      document.body.classList.remove('detail-on');
+      setCard(false);
       subEl.hidden=false; subEl.scrollTop=0;
       if(key==='other'){ [].slice.call(subBody.querySelectorAll('video')).forEach(function(v){ v.muted=true; var p=v.play(); if(p&&p.catch) p.catch(function(){}); }); }
       navAs.forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-info')===key); });
@@ -2192,6 +2241,11 @@ body[data-theme="dark"] .pnext{background:#151210}
           +'<div class="pl-txt">'+(dt?dt.innerHTML:'')+'</div>';
         pl.setAttribute('aria-hidden','false'); pl.scrollTop=0;
         if(pcEl) pcEl.classList.add('on');
+        if(pcardTitle) pcardTitle.textContent=h1?h1.textContent:'';
+        if(pcardRows) pcardRows.innerHTML=rows;
+        if(pcardTxt) pcardTxt.innerHTML=dt?dt.innerHTML:'';
+        document.body.classList.add('detail-on');
+        setCard(false);
         var pt=pl.querySelector('.pl-title');
         if(pt){
           var fs=parseFloat(getComputedStyle(pt).fontSize)||30, guard=0;
@@ -2321,6 +2375,8 @@ body[data-theme="dark"] .pnext{background:#151210}
       if(pl){ pl.innerHTML=''; pl.setAttribute('aria-hidden','true'); pl.scrollTop=0; }
       if(heroL) heroL.classList.remove('about-mode','on-proj','other-mode');
       if(pcEl) pcEl.classList.remove('on');
+      document.body.classList.remove('detail-on');
+      setCard(false);
       navAs.forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-info')==='work'); });
       if(window.__mnavSync) window.__mnavSync('work');
     }
@@ -2346,7 +2402,10 @@ body[data-theme="dark"] .pnext{background:#151210}
     window.addEventListener('hashchange',routeHash);
     window.__routeHash=routeHash;
     document.addEventListener('keydown',function(e){
-      if(e.key==='Escape' && pageOpen() && (document.getElementById('detail')||{}).hidden) closePage();
+      if(e.key==='Escape' && pageOpen() && (document.getElementById('detail')||{}).hidden){
+        if(pcardEl && pcardEl.classList.contains('on')){ setCard(false); return; }
+        closePage();
+      }
     });
 
     /* ---------- 左栏：弧形长句 scene（照参考站原理重写） ---------- */
