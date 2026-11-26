@@ -513,6 +513,11 @@ body[data-theme="dark"] .pl-proj{background:var(--td,var(--paper))}
 .mnav-dial-svg{width:26px;height:26px;display:block}
 .mnav-dial-tick{stroke:currentColor;stroke-width:1;opacity:.28;stroke-linecap:round}
 .mnav-dial-tick.on{stroke:var(--accent);opacity:.9}
+.mnav-snd .miw{display:none}
+.mnav-snd .mix{display:block}
+.mnav-snd.on .miw{display:block}
+.mnav-snd.on .mix{display:none}
+.mnav-snd:not(.on){color:var(--muted)}
 .mnav-sheet{outline:none;position:absolute;left:0;right:0;bottom:0;height:430px;z-index:1;pointer-events:none}
 .mnav.is-open .mnav-sheet{pointer-events:auto}
 .mnav-list{position:absolute;top:36px;left:16px;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -907,10 +912,11 @@ body[data-theme="dark"] .pnext{background:#151210}
               <circle cx="20" cy="20" r="1.7" fill="var(--accent)"/>
             </svg>
           </button>
-          <button class="mnav-square" id="mnavSnd" type="button" aria-label="背景音乐">
+          <button class="mnav-square mnav-snd" id="mnavSnd" type="button" aria-label="背景音乐" aria-pressed="false">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M11 5 6.5 9H3.5v6h3L11 19V5z" fill="currentColor" stroke="none"/>
-              <path d="M15 9.5a4 4 0 0 1 0 5M17.5 7a7.5 7.5 0 0 1 0 10"/>
+              <path class="miw" d="M15 9.5a4 4 0 0 1 0 5M17.5 7a7.5 7.5 0 0 1 0 10"/>
+              <path class="mix" d="M15.3 9.7 19.3 14.3M19.3 9.7 15.3 14.3"/>
             </svg>
           </button>
           <button class="mnav-square" id="mnavInv" type="button" aria-label="切换深浅色主题">
@@ -2977,7 +2983,21 @@ body[data-theme="dark"] .pnext{background:#151210}
   });
 
   if(inv){ inv.addEventListener('click',function(){ var o=document.getElementById('invert'); if(o) o.click(); }); }
-  if(snd){ snd.addEventListener('click',function(){ var s=document.getElementById('snd'); if(s) s.click(); }); }
+  if(snd){
+    var sndSrc=document.getElementById('snd'), bgm=document.getElementById('bgm');
+    function sndSync(){
+      var on=!!(bgm && !bgm.paused && !bgm.muted);
+      snd.classList.toggle('on',on);
+      snd.setAttribute('aria-pressed',on?'true':'false');
+      snd.setAttribute('aria-label',on?'关闭背景音乐':'开启背景音乐');
+    }
+    sndSync();
+    if(bgm){ ['play','pause','volumechange','playing','ended'].forEach(function(ev){ bgm.addEventListener(ev,sndSync); }); }
+    snd.addEventListener('click',function(){
+      if(sndSrc) sndSrc.click();
+      setTimeout(sndSync,0); setTimeout(sndSync,260);
+    });
+  }
 
   var cur=document.querySelector('.rnav-mid a.on');
   if(cur) setActive(cur.getAttribute('data-info'));
