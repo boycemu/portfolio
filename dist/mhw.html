@@ -1816,9 +1816,13 @@ body[data-theme="dark"] .pnext{background:#151210}
       var black=ld.querySelector('.ld-black'), orange=ld.querySelector('.ld-orange');
       var nums=ld.querySelectorAll('.ld-num');
       var lotEl=ld.querySelector('#ldLot'), lotFb=ld.querySelector('#ldFallback'), lotAnim=null;
-      /* 猫动画：内联 SVG 原本 11 秒循环，这里只播 6.0s→10.96s（后 5 秒），由 rAF 逐帧定位 */
-      var catSvg=ld.querySelector('#ldCat'), catRaf=0, catT0=0;
-      var CAT_A=5, CAT_LEN=5.96;
+      /* 猫动画：内联 SVG 为 11 秒循环。原来用 rAF 每帧 setCurrentTime 强迫重采样，
+         低端手机上会卡住不动。改为：只摆好起点姿态后交给浏览器原生 SMIL（零 JS 逐帧开销）。
+         白描边滤镜保留（猫的黑填充+白线稿全靠它），只按显示宽度把半径换成 1 物理像素。 */
+      var catSvg=ld.querySelector('#ldCat'), catRaf=0;
+      /* 从 5.2s 起播：整段开头是猫站着不动的引入，5.2-8.9 是起跳→落地→攀爬的连续动作段。
+         黑场只存在约 3.75s，因此播到 8.75s 就淡出，不需要循环、也没有跳帧。 */
+      var CAT_A=5.2;
       /* 白描边固定 1 物理像素：按当前显示宽度把滤镜半径换算成用户单位 */
       function fitCatOutline(){
         if(!catSvg) return;
@@ -1829,23 +1833,20 @@ body[data-theme="dark"] .pnext{background:#151210}
       }
       fitCatOutline();
       window.addEventListener('resize',fitCatOutline);
-      if(catSvg&&catSvg.pauseAnimations&&catSvg.setCurrentTime){
-        try{
-          catSvg.pauseAnimations();
-          catSvg.setCurrentTime(CAT_A);
-          var catLoop=function(ts){
-            if(!catT0) catT0=ts;
-            var el=(ts-catT0)/1000;
-            catSvg.setCurrentTime(CAT_A+(el%CAT_LEN));
-            catRaf=requestAnimationFrame(catLoop);
-          };
-          catRaf=requestAnimationFrame(catLoop);
-        }catch(e){ catRaf=0; }
+      if(catSvg&&catSvg.setCurrentTime){
+        /* 只 seek 到走位起点，之后交给原生 SMIL（不再逐帧 setCurrentTime）。
+           页面首帧前 SVG 时间轴还没启动，此时就摆好 6.0s 的姿态并暂停，
+           等时间轴起来（约 350ms）再放开，避免开头先立一下再跳。 */
+        function seekCat(){ try{ catSvg.setCurrentTime(CAT_A); }catch(e){} }
+        try{ catSvg.pauseAnimations(); seekCat(); }catch(e){}
+        setTimeout(function(){
+          try{ seekCat(); catSvg.unpauseAnimations(); }catch(e){}
+        },360);
       }
-      // 兜底：万一猫动画没渲染出来，露静态猫，不留空白
+      // 兜底：SMIL 不可用或没渲染出来时，露静态猫，不留空白
       setTimeout(function(){
         var ok=false;
-        try{ ok=!!(lotEl&&lotEl.querySelector('svg')) && !!catSvg; }catch(e){}
+        try{ ok=!!(catSvg&&catSvg.pauseAnimations); }catch(e){}
         if(!ok&&lotFb) lotFb.classList.add('on');
       },520);
       var done=false;
